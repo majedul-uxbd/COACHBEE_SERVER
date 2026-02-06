@@ -10,6 +10,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
 const { authRoute } = require("./routes/auth/auth.route");
+const { studentRoute } = require("./routes/students/students.route");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -17,6 +18,7 @@ app.use(cors());
 
 
 app.use("/auth", authRoute);
+app.use("/students", studentRoute);
 
 
 // Middleware to parse JSON bodies
