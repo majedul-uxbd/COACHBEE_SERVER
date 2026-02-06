@@ -36,7 +36,7 @@ const setServerResponse = (code, msgKey, language, result = null) => {
     const langMessages = translations[language] || translations['en'];
 
     // Get the message from the JSON using the key
-    const message = langMessages[msgKey] || 'Japanese Message is not found';
+    const message = langMessages[msgKey] || 'Bengali Message is not found';
 
     // Determine success or error status
     const statusType = code >= 200 && code < 300 ? 'success' : 'failed';

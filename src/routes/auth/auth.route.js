@@ -10,12 +10,11 @@
  */
 
 const express = require("express");
-const authRoute = express.Router();
-
 const { userLogin } = require("../../main/auth/user-login");
 const { userLoginDataValidator } = require("../../middleware/auth/user-login-data-validator");
-const { getPersonalData } = require("../../main/auth/get-user-data");
 const { authenticateToken } = require("../../middleware/jwt");
+const { getPersonalData } = require("../../main/auth/get-user-data");
+const authRoute = express.Router();
 
 
 /**

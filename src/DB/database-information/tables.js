@@ -14,14 +14,10 @@
  * @description This module defines the database table names used in the application.
  */
 const TABLES = Object.freeze({
-    TBL_EMPLOYEES: 'tbl_employees',
-    TBL_PROJECTS: 'tbl_projects',
-    TBL_CLIENTS: 'tbl_clients',
-    TBL_PROJECT_REQUIREMENT_DETAILS: 'tbl_project_requirement_details',
-    TBL_PROJECT_MEMBERS: 'tbl_project_members',
-    TBL_PROJECT_ENG_REQUIREMENTS: 'tbl_project_eng_requirements',
-    TBL_PROJECT_SALES_REQUIREMENTS: 'tbl_project_sales_requirements',
-    TBL_PROJECT_FINANCE_DETAILS: 'tbl_project_finance_details',
+    TBL_USERS: 'tbl_users',
+    TBL_STUDENTS: 'tbl_students',
+    TBL_attendance: 'tbl_attendance',
+    TBL_PAYMENTS: 'tbl_payments',
     TBL_OTP_VERIFICATION: 'tbl_otp_verification',
     TBL_NOTIFICATIONS: 'tbl_notifications',
 });

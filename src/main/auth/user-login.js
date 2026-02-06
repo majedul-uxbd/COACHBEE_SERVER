@@ -1,0 +1,154 @@
+/**
+ * @author Md. Majedul Islam <https://github.com/majedul-uxbd> 
+ * Software Engineer,
+ * Ultra-X BD Ltd.
+ *
+ * @copyright All right reserved Ultra-X Asia Pacific
+ * 
+ * @description 
+ * 
+ */
+
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { TABLES } = require("../../DB/database-information/tables");
+const { pool } = require("../../DB/db-pool");
+const { API_STATUS_CODE } = require('../../consts/error-status');
+const { setServerResponse } = require('../../common/set-server-response');
+const { TABLE_USERS_COLUMNS_NAME } = require('../../DB/database-information/table-user-columns-name');
+
+
+/**
+ * Queries the database for a user by email and returns user info or status code.
+ * @param {string} email - The user's email address.
+ * @returns {Promise<Object|number|boolean>} User info object if found and active, 2 if pending, 0 if inactive, false if not found.
+ */
+const userLoginQuery = async (email) => {
+    const _query = `
+        SELECT
+            ${TABLE_USERS_COLUMNS_NAME.ID},
+            ${TABLE_USERS_COLUMNS_NAME.FULLNAME},
+            ${TABLE_USERS_COLUMNS_NAME.EMAIL},
+            ${TABLE_USERS_COLUMNS_NAME.PASSWORD},
+            ${TABLE_USERS_COLUMNS_NAME.IS_ADMIN},
+            ${TABLE_USERS_COLUMNS_NAME.IMAGE_URL}
+        FROM
+            ${TABLES.TBL_USERS}
+        WHERE
+            ${TABLE_USERS_COLUMNS_NAME.EMAIL} = ? AND
+            ${TABLE_USERS_COLUMNS_NAME.IS_ACTIVE} = 1;
+        `;
+
+    try {
+        const [rows] = await pool.query(_query, [email]);
+        if (rows.length > 0) {
+            return Promise.resolve(rows[0]);
+        }
+        return false;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+
+/**
+ * Generates a JWT token for the given user info.
+ * @param {{ id: number, email: string, is_admin: boolean }} userInfo - The user information for the token payload.
+ * @returns {string} The generated JWT token.
+ * @description This function will generate a unique user token.
+ */
+const generateToken = (userInfo) => {
+    const token = jwt.sign(
+        {
+            id: userInfo.id,
+            email: userInfo.email,
+            isAdmin: userInfo.is_admin,
+        },
+        process.env.SECRET_KEY,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
+        }
+    );
+
+    return token;
+};
+
+
+/**
+ * Handles user login by validating credentials and returning a server response with a token on success.
+ * @param {{ lg: string, email: string, password: string }} userData - The user login data.
+ * @returns {Promise<Object>} The server response indicating success or failure, with a token and user info on success.
+ * @description This function handles user login by validated user data.
+ */
+const userLogin = async (userData) => {
+    let userInfo;
+
+    try {
+        userInfo = await userLoginQuery(userData.email);
+    } catch (error) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'invalid_email_or_password',
+                userData.lg,
+            )
+        );
+    }
+
+    if (userInfo === false) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'user_not_found_or_user_is_not_active',
+                userData.lg
+            )
+        );
+    }
+
+    let isPasswordCorrect;
+    try {
+        isPasswordCorrect = await bcrypt.compare(
+            userData.password,
+            userInfo.password
+        ); //compare user passwords
+    } catch (error) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'invalid_email_or_password',
+                userData.lg,
+            )
+        );
+    }
+    if (isPasswordCorrect === false) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'invalid_email_or_password',
+                userData.lg,
+            )
+        );
+    }
+    const token = generateToken(userInfo);
+    user = {
+        token: token,
+        id: userInfo.id,
+        fullName: userInfo.full_name,
+        email: userInfo.email,
+        is_admin: userInfo.is_admin,
+        image_url: userInfo.image_url,
+    }
+
+    return Promise.resolve(
+        setServerResponse(
+            API_STATUS_CODE.OK,
+            'user_logged_in_successfully',
+            userData.lg,
+            user
+        )
+    );
+}
+
+module.exports = {
+    userLogin
+};
