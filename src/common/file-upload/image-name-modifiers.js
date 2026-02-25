@@ -20,7 +20,7 @@ const normalize_path_folder = path.normalize(imageDir);
  * Multer storage configuration for image uploads.
  *
  * - Stores images in the normalized image directory.
- * - Filenames are uppercased, spaces replaced with underscores, and appended with a timestamp.
+ * - Filenames are uppercase, spaces replaced with underscores, and appended with a timestamp.
  * - Preserves the original file extension.
  *
  * Used for profile and project image uploads to ensure unique and standardized filenames.

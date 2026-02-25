@@ -14,47 +14,36 @@
 const _ = require('lodash');
 const { parse, isValid } = require('date-fns');
 
-const DEPARTMENT = [
-    'sales',
-    'finance',
-    'engineer'
+const CLASS = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve"
 ]
 
-/**
- * Validates a employee ID for minimum and maximum length constraints.
- * @param {string} employeeId - The employee ID to validate.
- * @returns {true|string} True if valid, error string otherwise.
- */
-const isEmployeeIDValid = (employeeId) => {
-    const MINIMUM_LENGTH = 3;
-    const MAXIMUM_LENGTH = 45;
-    if (typeof employeeId !== 'string') {
-        return 'employee_id_must_be_a_string';
-    }
-    if (employeeId.length < MINIMUM_LENGTH) {
-        return 'employee_id_must_be_at_least_3_characters';
-    }
-    if (employeeId.length > MAXIMUM_LENGTH) {
-        return 'employee_id_must_not_exceed_45_characters';
-    }
-    return true;
-}
-
 
 /**
- * Validates a employee name for minimum and maximum length constraints.
- * @param {string} fullName - The employee name to validate.
+ * Validates name for minimum and maximum length constraints.
+ * @param {string} fullName - The name to validate.
  * @returns {true|string} True if valid, error string otherwise.
  */
-const isEmployeeNameValid = (fullName) => {
+const isNameValid = (fullName) => {
     const MINIMUM_LENGTH = 3;
-    const MAXIMUM_LENGTH = 150;
+    const MAXIMUM_LENGTH = 100;
 
     if (fullName.length < MINIMUM_LENGTH) {
-        return 'employee_name_must_be_at_least_3_characters';
+        return 'input_data_must_be_at_least_3_characters';
     }
     if (fullName.length > MAXIMUM_LENGTH) {
-        return 'employee_name_must_not_exceed_150_characters';
+        return 'name_must_not_exceed_100_characters';
     }
     return true;
 }
@@ -92,12 +81,12 @@ const isEmailValid = (email) => {
 
 
 /**
- * Validates employee department against allowed values.
- * @param {string} department - The department to validate.
+ * Validates employee classList against allowed values.
+ * @param {string} classList - The classList to validate.
  * @returns {true|string} True if valid, error string otherwise.
  */
-const isValidDepartment = (department) => {
-    if (!DEPARTMENT.includes(department)) {
+const isValidClass = (classList) => {
+    if (!CLASS.includes(classList)) {
         return 'invalid_department';
     }
     return true;
@@ -331,6 +320,18 @@ const isAddressValid = (address) => {
 };
 
 /**
+ * Validates an monthly_fees for type and maximum length.
+ * @param {string} monthly_fees - The monthly_fees to validate.
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isMonthlyFeesValid = (monthly_fees) => {
+    if (typeof monthly_fees !== 'number') {
+        return 'input_value_must_be_a_number';
+    }
+    return true;
+};
+
+/**
  * Validates a project requirements for minimum and maximum length constraints.
  * @param {string} requirements - The project requirements to validate.
  * @returns {true|string} True if valid, error string otherwise.
@@ -386,10 +387,10 @@ const isMessageValid = (message) => {
 
 
 module.exports = {
-    isEmployeeIDValid,
-    isEmployeeNameValid,
+    isNameValid,
     isEmailValid,
-    isValidDepartment,
+    isValidClass,
+    isMonthlyFeesValid,
     isProjectNameValid,
     isProjectDescriptionValid,
     isProjectVersionValid,

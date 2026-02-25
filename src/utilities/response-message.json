@@ -34,7 +34,16 @@
         "status_code_is_required": "Status code is required",
         "at_least_one_field_is_required": "At least one field is required",
         "input_data_must_be_at_least_3_characters": "Input data must be at least 3 characters",
-        "input_data_must_not_exceed_300_characters": "Input data must not exceed 300 characters"
+        "input_data_must_not_exceed_300_characters": "Input data must not exceed 300 characters",
+        "student_id_is_required": "Student ID is required",
+        "student_name_is_required": "Student name is required",
+        "name_must_not_exceed_100_characters": "Name must not exceed 300 characters",
+        "student_class_is_required": "Student class is required",
+        "guardian_phone_no_is_required": "Guardian phone no is required",
+        "address_is_required": "Address is Required",
+        "monthly_fees_is_required": "Monthly fees is required",
+        "input_value_must_be_a_number": "Input value must be a number",
+        "student_created_successfully": "Student is created successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -71,6 +80,15 @@
         "status_code_is_required": "স্ট্যাটাস কোড প্রয়োজন",
         "at_least_one_field_is_required": "কমপক্ষে একটি ক্ষেত্র প্রয়োজন",
         "input_data_must_be_at_least_3_characters": "ইনপুট ডেটা কমপক্ষে ৩ অক্ষর হতে হবে",
-        "input_data_must_not_exceed_300_characters": "ইনপুট ডেটা ৩০০ অক্ষর অতিক্রম করা উচিত নয়"
+        "input_data_must_not_exceed_300_characters": "ইনপুট ডেটা ৩০০ অক্ষর অতিক্রম করা উচিত নয়",
+        "student_id_is_required": "",
+        "student_name_is_required": "শিক্ষার্থীর নাম প্রয়োজন",
+        "name_must_not_exceed_100_characters": "নাম ১০০ অক্ষর অতিক্রম করা উচিত নয়",
+        "student_class_is_required": "শিক্ষার্থীর ক্লাস প্রয়োজন",
+        "guardian_phone_no_is_required": "অভিভাবকের ফোন নম্বর প্রয়োজন",
+        "address_is_required": " ঠিকানা প্রয়োজন",
+        "monthly_fees_is_required": " মাসিক ফি প্রয়োজন",
+        "input_value_must_be_a_number": "ইনপুট মান একটি সংখ্যা হতে হবে",
+        "student_created_successfully": "শিক্ষার্থী সফলভাবে তৈরি হয়েছে"
     }
 }
