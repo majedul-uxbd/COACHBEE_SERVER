@@ -16,10 +16,11 @@
  */
 const TABLE_USERS_COLUMNS_NAME = Object.freeze({
     ID: 'id',
+    UUID: 'uuid',
     FULLNAME: 'full_name',
     EMAIL: 'email',
+    ROLE: "role",
     PASSWORD: 'password',
-    IS_ADMIN: 'is_admin',
     IMAGE_URL: 'image_url',
     IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',

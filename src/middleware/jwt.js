@@ -21,10 +21,10 @@ const { TABLE_USERS_COLUMNS_NAME } = require('../DB/database-information/table-u
  * Checks if a user with the given parameters is present and active in the database.
  * @param {number} id - The user's ID.
  * @param {string} email - The user's email address.
- * @param {boolean} isAdmin - The user's admin status.
+ * @param {boolean} role - The user's admin status.
  * @returns {Promise<boolean>} - Resolves to true if user exists and is active, false otherwise. Returns error on failure.
  */
-const checkUserId = async (id, email, isAdmin) => {
+const checkUserId = async (id, uuid, email, role) => {
 	const query = `
   	SELECT
 		*
@@ -32,15 +32,17 @@ const checkUserId = async (id, email, isAdmin) => {
 		${TABLES.TBL_USERS}
 	WHERE
 		${TABLE_USERS_COLUMNS_NAME.ID} = ? AND
+		${TABLE_USERS_COLUMNS_NAME.UUID} = ? AND
 		${TABLE_USERS_COLUMNS_NAME.EMAIL} = ? AND
-		${TABLE_USERS_COLUMNS_NAME.IS_ADMIN}  = ? AND
+		${TABLE_USERS_COLUMNS_NAME.ROLE}  = ? AND
 		${TABLE_USERS_COLUMNS_NAME.IS_ACTIVE}  = ${1};
   	`;
 
 	const values = [
 		id,
+		uuid,
 		email,
-		isAdmin
+		role
 	]
 
 	try {
@@ -97,14 +99,15 @@ const authenticateToken = async (req, res, next) => {
 				)
 			);
 		}
-		const { id, email, isAdmin } = user;
+		const { id, uuid, email, role } = user;
 		try {
-			const isUserExist = await checkUserId(id, email, isAdmin);
+			const isUserExist = await checkUserId(id, uuid, email, role);
 			if (isUserExist === true) {
 				req.auth = {
 					id,
+					uuid,
 					email,
-					isAdmin
+					role
 				};
 				next();
 			} else {

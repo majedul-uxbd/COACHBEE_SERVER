@@ -15,21 +15,23 @@ const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 
-const insertStudentDataQuery = async (studentData) => {
+const insertStudentDataQuery = async (authData, studentData) => {
     const _query = `
     INSERT INTO
         ${TABLES.TBL_STUDENTS}
         (
+            ${TABLE_STUDENT_COLUMNS_NAME.UUID},
             ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME},
             ${TABLE_STUDENT_COLUMNS_NAME.CLASS},
             ${TABLE_STUDENT_COLUMNS_NAME.GUARDIAN_PHONE},
             ${TABLE_STUDENT_COLUMNS_NAME.ADDRESS},
             ${TABLE_STUDENT_COLUMNS_NAME.MONTHLY_FEE}
         )
-    VALUES (?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?);
     `;
 
     const _values = [
+        authData.uuid,
         studentData.fullName,
         studentData.class,
         studentData.guardianPhone,
@@ -49,6 +51,7 @@ const insertStudentDataQuery = async (studentData) => {
 
 /**
  * @param {string} lg 
+ * @param {{ id: number, uuid: string, email: string }} authData 
  * @param {{
  * fullName:string,
  * class:string,
@@ -60,9 +63,9 @@ const insertStudentDataQuery = async (studentData) => {
  * It returns a success message if the student is created successfully, or an error message 
  * if there is an issue during the creation process.
  */
-const createNewStudent = async (lg, studentData) => {
+const createNewStudent = async (lg, authData, studentData) => {
     try {
-        const isInserted = await insertStudentDataQuery(studentData);
+        const isInserted = await insertStudentDataQuery(authData, studentData);
         if (isInserted) {
             return Promise.resolve(
                 setServerResponse(

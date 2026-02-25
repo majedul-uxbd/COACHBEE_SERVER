@@ -28,7 +28,7 @@ const getUserPersonalData = async (authData) => {
             ${TABLE_USERS_COLUMNS_NAME.ID},
             ${TABLE_USERS_COLUMNS_NAME.FULLNAME},
             ${TABLE_USERS_COLUMNS_NAME.EMAIL},
-            ${TABLE_USERS_COLUMNS_NAME.IS_ADMIN},
+            ${TABLE_USERS_COLUMNS_NAME.ROLE},
             ${TABLE_USERS_COLUMNS_NAME.IMAGE_URL},
             ${TABLE_USERS_COLUMNS_NAME.CREATED_AT}, 
             ${TABLE_USERS_COLUMNS_NAME.UPDATED_AT}
@@ -36,12 +36,14 @@ const getUserPersonalData = async (authData) => {
             ${TABLES.TBL_USERS}
         WHERE
             ${TABLE_USERS_COLUMNS_NAME.ID} = ? AND
+            ${TABLE_USERS_COLUMNS_NAME.UUID} = ? AND
             ${TABLE_USERS_COLUMNS_NAME.EMAIL} = ? AND
             ${TABLE_USERS_COLUMNS_NAME.IS_ACTIVE} = 1;
     `;
 
     const _values = [
         authData.id,
+        authData.uuid,
         authData.email,
     ];
     try {

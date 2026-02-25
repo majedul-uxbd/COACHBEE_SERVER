@@ -12,7 +12,7 @@
         "user_logged_in_successfully": "User logged in successfully",
         "invalid_email_or_password": "Invalid email or password",
         "employee_id_must_be_a_string": "Employee ID must be a string",
-        "employee_full_name_is_required": "Full name is required and must be a non-empty string",
+        "full_name_is_required": "Full name is required and must be a non-empty string",
         "email_has_already_exist": "Email has already exist",
         "internal_server_error": "Internal server error",
         "string_data_is_required": "String data is required",
@@ -25,6 +25,7 @@
         "invalid_user_phone_number": "Invalid user phone number",
         "address_must_not_exceed_200_characters": "Address must not exceed 200 characters",
         "address_must_be_a_string": "Address must be a string",
+        "password_is_required": "Password is required",
         "otp_is_valid": "OTP is valid",
         "otp_is_invalid": "OTP is invalid",
         "failed_to_update_password": "Failed to update password",
@@ -43,7 +44,9 @@
         "address_is_required": "Address is Required",
         "monthly_fees_is_required": "Monthly fees is required",
         "input_value_must_be_a_number": "Input value must be a number",
-        "student_created_successfully": "Student is created successfully"
+        "student_created_successfully": "Student is created successfully",
+        "password_must_not_exceed_150_characters": "Password must not exceed 150 characters",
+        "admin_created_successfully": "Admin is created successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -58,7 +61,7 @@
         "user_logged_in_successfully": "ব্যবহারকারী সফলভাবে লগইন করেছেন",
         "invalid_email_or_password": "ইমেল বা পাসওয়ার্ড সঠিক নয়",
         "employee_id_must_be_a_string": "কর্মচারী আইডি একটি স্ট্রিং হতে হবে",
-        "employee_full_name_is_required": "সম্পূর্ণ নাম প্রয়োজন এবং একটি অ-খালি স্ট্রিং হতে হবে",
+        "full_name_is_required": "সম্পূর্ণ নাম প্রয়োজন এবং একটি অ-খালি স্ট্রিং হতে হবে",
         "email_has_already_exist": "ইমেল ইতিমধ্যে বিদ্যমান",
         "internal_server_error": "অভ্যন্তরীণ সার্ভার ত্রুটি",
         "string_data_is_required": "স্ট্রিং ডেটা প্রয়োজন",
@@ -71,6 +74,7 @@
         "invalid_user_phone_number": "ব্যবহারকারী ফোন নম্বর সঠিক নয়",
         "address_must_not_exceed_200_characters": "ঠিকানা ২০০ অক্ষর অতিক্রম করা উচিত নয়",
         "address_must_be_a_string": "ঠিকানা একটি স্ট্রিং হতে হবে",
+        "password_is_required": "পাসওয়ার্ড প্রয়োজন",
         "otp_is_valid": "ওটিপি বৈধ",
         "otp_is_invalid": "ওটিপি সঠিক নয়",
         "failed_to_update_password": "পাসওয়ার্ড আপডেট করতে ব্যর্থ হয়েছে",
@@ -89,6 +93,8 @@
         "address_is_required": " ঠিকানা প্রয়োজন",
         "monthly_fees_is_required": " মাসিক ফি প্রয়োজন",
         "input_value_must_be_a_number": "ইনপুট মান একটি সংখ্যা হতে হবে",
-        "student_created_successfully": "শিক্ষার্থী সফলভাবে তৈরি হয়েছে"
+        "student_created_successfully": "শিক্ষার্থী সফলভাবে তৈরি হয়েছে",
+        "password_must_not_exceed_150_characters": "পাসওয়ার্ড ১৫০ অক্ষর অতিক্রম করা উচিত নয়",
+        "admin_created_successfully": "অ্যাডমিন সফলভাবে তৈরি হয়েছে"
     }
 }

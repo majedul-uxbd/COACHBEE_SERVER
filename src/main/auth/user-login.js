@@ -27,10 +27,11 @@ const userLoginQuery = async (email) => {
     const _query = `
         SELECT
             ${TABLE_USERS_COLUMNS_NAME.ID},
+            ${TABLE_USERS_COLUMNS_NAME.UUID},
             ${TABLE_USERS_COLUMNS_NAME.FULLNAME},
             ${TABLE_USERS_COLUMNS_NAME.EMAIL},
+            ${TABLE_USERS_COLUMNS_NAME.ROLE},
             ${TABLE_USERS_COLUMNS_NAME.PASSWORD},
-            ${TABLE_USERS_COLUMNS_NAME.IS_ADMIN},
             ${TABLE_USERS_COLUMNS_NAME.IMAGE_URL}
         FROM
             ${TABLES.TBL_USERS}
@@ -53,7 +54,7 @@ const userLoginQuery = async (email) => {
 
 /**
  * Generates a JWT token for the given user info.
- * @param {{ id: number, email: string, is_admin: boolean }} userInfo - The user information for the token payload.
+ * @param {{ id: number, uuid: string, email: string, role: string }} userInfo - The user information for the token payload.
  * @returns {string} The generated JWT token.
  * @description This function will generate a unique user token.
  */
@@ -61,8 +62,9 @@ const generateToken = (userInfo) => {
     const token = jwt.sign(
         {
             id: userInfo.id,
+            uuid: userInfo.uuid,
             email: userInfo.email,
-            isAdmin: userInfo.is_admin,
+            role: userInfo.role,
         },
         process.env.SECRET_KEY,
         {
@@ -133,9 +135,10 @@ const userLogin = async (userData) => {
     user = {
         token: token,
         id: userInfo.id,
+        uuid: userInfo.uuid,
         fullName: userInfo.full_name,
         email: userInfo.email,
-        is_admin: userInfo.is_admin,
+        role: userInfo.role,
         image_url: userInfo.image_url,
     }
 

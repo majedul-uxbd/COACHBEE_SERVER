@@ -16,6 +16,7 @@
  */
 const TABLE_STUDENT_COLUMNS_NAME = Object.freeze({
     ID: 'id',
+    UUID: "uuid",
     FULLNAME: 'full_name',
     CLASS: 'class',
     GUARDIAN_PHONE: 'guardian_phone',

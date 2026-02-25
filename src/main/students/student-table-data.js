@@ -26,10 +26,12 @@ const totalUserTableRowCount = async (authData) => {
         COUNT(*) AS totalRows
     FROM
         ${TABLES.TBL_STUDENTS}
+    WHERE
+        ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ?;
     `;
 
     try {
-        const [rows] = await pool.query(query);
+        const [rows] = await pool.query(query, [authData.uuid]);
         return rows[0].totalRows;
     } catch (error) {
         return Promise.reject(error);
@@ -37,7 +39,7 @@ const totalUserTableRowCount = async (authData) => {
 };
 
 
-const getStudentDetailsDataQuery = async (paginationData) => {
+const getStudentDetailsDataQuery = async (authData, paginationData) => {
     const _query = `
     SELECT
         ${TABLE_STUDENT_COLUMNS_NAME.ID},
@@ -51,11 +53,14 @@ const getStudentDetailsDataQuery = async (paginationData) => {
         ${TABLE_STUDENT_COLUMNS_NAME.UPDATED_AT}
     FROM
         ${TABLES.TBL_STUDENTS}
+    WHERE
+        ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ?
     ORDER BY
             ${TABLE_STUDENT_COLUMNS_NAME.CREATED_AT} ${paginationData.sortOrder}
         LIMIT ? OFFSET ?;
     `;
     const _values = [
+        authData.uuid,
         paginationData.itemsPerPage,
         paginationData.offset
     ];
@@ -73,13 +78,14 @@ const getStudentDetailsDataQuery = async (paginationData) => {
  * Retrieves Student table data with server-side pagination, total row count.
  *
  * @param {string} lgKey - Language key for localization.
+ * @param {{ id: number,uuid:string, email: string }} authData - Authenticated user data.
  * @param {{ itemsPerPage: number, currentPageNumber: number, filterBy: string, sortOrder: string, offset: number }} paginationData - Pagination and filter information.
  * @returns {Promise<Object>} - Resolves with a server response containing metadata, table data, and pending data. Rejects with error on failure.
  */
-const getStudentTableData = async (lgKey, paginationData) => {
+const getStudentTableData = async (lgKey, authData, paginationData) => {
     try {
-        const totalRows = await totalUserTableRowCount();
-        const StudentData = await getStudentDetailsDataQuery(paginationData);
+        const totalRows = await totalUserTableRowCount(authData);
+        const StudentData = await getStudentDetailsDataQuery(authData, paginationData);
 
         const result = {
             metadata: {
@@ -96,6 +102,9 @@ const getStudentTableData = async (lgKey, paginationData) => {
             )
         )
     } catch (error) {
+        console.log('🚀 -----------------------------------------------🚀');
+        console.log('🚀 ~ :104 ~ getStudentTableData ~ error:', error);
+        console.log('🚀 -----------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,
