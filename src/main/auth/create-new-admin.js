@@ -45,7 +45,7 @@ const insertAdminDataQuery = async (uuid, userData) => {
             ${TABLE_USERS_COLUMNS_NAME.UUID},
             ${TABLE_USERS_COLUMNS_NAME.FULLNAME},
             ${TABLE_USERS_COLUMNS_NAME.EMAIL},
-            ${TABLE_USERS_COLUMNS_NAME.IS_ADMIN},
+            ${TABLE_USERS_COLUMNS_NAME.ROLE},
             ${TABLE_USERS_COLUMNS_NAME.PASSWORD}
         )
     VALUES (?, ?, ?, ?, ?);
@@ -54,7 +54,7 @@ const insertAdminDataQuery = async (uuid, userData) => {
         uuid,
         userData.fullName,
         userData.email,
-        1, // is_admin = 1 for admin users
+        "admin",
         userData.password
     ];
     try {
@@ -107,6 +107,9 @@ const createNewAdmin = async (lgKey, userData) => {
             );
         }
     } catch (error) {
+        console.log('🚀 ------------------------------------------🚀');
+        console.log('🚀 ~ :110 ~ createNewAdmin ~ error:', error);
+        console.log('🚀 ------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

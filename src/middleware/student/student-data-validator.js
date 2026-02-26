@@ -9,6 +9,7 @@
  * 
  */
 
+const _ = require("lodash");
 const { isNameValid, isValidClass, isPhoneNumberValid, isAddressValid, isMonthlyFeesValid } = require("../../common/data-validator");
 const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");

@@ -46,7 +46,14 @@
         "input_value_must_be_a_number": "Input value must be a number",
         "student_created_successfully": "Student is created successfully",
         "password_must_not_exceed_150_characters": "Password must not exceed 150 characters",
-        "admin_created_successfully": "Admin is created successfully"
+        "admin_created_successfully": "Admin is created successfully",
+        "student_is_not_found": "Student is not found",
+        "student_deleted_successfully": "Student is deleted successfully",
+        "student_has_already_active": "Student is already active",
+        "student_has_already_inactive": "Student is already inactive",
+        "student_activated_successfully": "Student is activated successfully",
+        "student_inactivated_successfully": "Student is inactivated successfully",
+        "student_updated_successfully": "Student is updated successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -95,6 +102,13 @@
         "input_value_must_be_a_number": "ইনপুট মান একটি সংখ্যা হতে হবে",
         "student_created_successfully": "শিক্ষার্থী সফলভাবে তৈরি হয়েছে",
         "password_must_not_exceed_150_characters": "পাসওয়ার্ড ১৫০ অক্ষর অতিক্রম করা উচিত নয়",
-        "admin_created_successfully": "অ্যাডমিন সফলভাবে তৈরি হয়েছে"
+        "admin_created_successfully": "অ্যাডমিন সফলভাবে তৈরি হয়েছে",
+        "student_is_not_found": "শিক্ষার্থী পাওয়া যায়নি",
+        "student_deleted_successfully": "শিক্ষার্থী সফলভাবে মুছে ফেলা হয়েছে",
+        "student_has_already_active": "শিক্ষার্থী ইতিমধ্যে সক্রিয়",
+        "student_has_already_inactive": "শিক্ষার্থী ইতিমধ্যে নিষ্ক্রিয়",
+        "student_activated_successfully": "শিক্ষার্থী সফলভাবে সক্রিয় করা হয়েছে",
+        "student_inactivated_successfully": "শিক্ষার্থী সফলভাবে নিষ্ক্রিয় করা হয়েছে",
+        "student_updated_successfully": "শিক্ষার্থী সফলভাবে আপডেট করা হয়েছে"
     }
 }

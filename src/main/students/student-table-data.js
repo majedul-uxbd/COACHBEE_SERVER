@@ -43,6 +43,7 @@ const getStudentDetailsDataQuery = async (authData, paginationData) => {
     const _query = `
     SELECT
         ${TABLE_STUDENT_COLUMNS_NAME.ID},
+        ${TABLE_STUDENT_COLUMNS_NAME.UUID},
         ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME},
         ${TABLE_STUDENT_COLUMNS_NAME.GUARDIAN_PHONE},
         ${TABLE_STUDENT_COLUMNS_NAME.CLASS},
@@ -102,9 +103,6 @@ const getStudentTableData = async (lgKey, authData, paginationData) => {
             )
         )
     } catch (error) {
-        console.log('🚀 -----------------------------------------------🚀');
-        console.log('🚀 ~ :104 ~ getStudentTableData ~ error:', error);
-        console.log('🚀 -----------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,
