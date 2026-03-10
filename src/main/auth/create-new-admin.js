@@ -44,18 +44,22 @@ const insertAdminDataQuery = async (uuid, userData) => {
         (
             ${TABLE_USERS_COLUMNS_NAME.UUID},
             ${TABLE_USERS_COLUMNS_NAME.FULLNAME},
+            ${TABLE_USERS_COLUMNS_NAME.COACHING_NAME},
             ${TABLE_USERS_COLUMNS_NAME.EMAIL},
             ${TABLE_USERS_COLUMNS_NAME.ROLE},
-            ${TABLE_USERS_COLUMNS_NAME.PASSWORD}
+            ${TABLE_USERS_COLUMNS_NAME.PASSWORD},
+            ${TABLE_USERS_COLUMNS_NAME.PLAN}
         )
-    VALUES (?, ?, ?, ?, ?);
+    VALUES (?, ?, ?, ?, ?, ?, ?);
     `;
     const _values = [
         uuid,
         userData.fullName,
+        userData.coachingName,
         userData.email,
         "admin",
-        userData.password
+        userData.password,
+        userData.plan || 'TRAIL'
     ];
     try {
         const [result] = await pool.query(_query, _values);
@@ -71,8 +75,10 @@ const insertAdminDataQuery = async (uuid, userData) => {
  * @param {string} lgKey - Language key for response messages
  * @param {{
  * fullName:string,
+ * coachingName:string,
  * email:string,
  * password:string
+ * plan:string
  * }} userData  - The user data for the new admin to be created
  * @description This function creates a new admin user in the database. It first checks if the email already exists, 
  * and if not, it inserts the new admin data into the database.
@@ -108,7 +114,7 @@ const createNewAdmin = async (lgKey, userData) => {
         }
     } catch (error) {
         console.log('🚀 ------------------------------------------🚀');
-        console.log('🚀 ~ :110 ~ createNewAdmin ~ error:', error);
+        console.log('🚀 ~ :116 ~ createNewAdmin ~ error:', error);
         console.log('🚀 ------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(

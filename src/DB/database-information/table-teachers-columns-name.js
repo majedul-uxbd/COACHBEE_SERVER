@@ -11,24 +11,22 @@
 
 
 /**
- * @description This file contains the column names for the users table in the database.
+ * @description This file contains the column names for the teachers table in the database.
  * It is used to ensure consistency in column naming across the application.
  */
-const TABLE_USERS_COLUMNS_NAME = Object.freeze({
+const TABLE_TEACHERS_COLUMNS_NAME = Object.freeze({
     ID: 'id',
-    UUID: 'uuid',
+    UUID: "uuid",
     FULLNAME: 'full_name',
-    COACHING_NAME: 'coaching_name',
-    EMAIL: 'email',
-    ROLE: "role",
-    PASSWORD: 'password',
-    PLAN: 'plan',
-    IMAGE_URL: 'image_url',
+    CLASS: 'class',
+    PHONE: 'phone',
+    SALARY: 'salary',
+    ADDRESS: 'address',
     IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'
 });
 
 module.exports = {
-    TABLE_USERS_COLUMNS_NAME
+    TABLE_TEACHERS_COLUMNS_NAME
 };

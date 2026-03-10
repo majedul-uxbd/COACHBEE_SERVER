@@ -10,26 +10,26 @@
  */
 
 const { setServerResponse } = require("../../common/set-server-response");
-const { TABLE_STUDENT_COLUMNS_NAME } = require("../../DB/database-information/table-student-columns-name");
 const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 const { format } = require("date-fns");
+const { TABLE_TEACHERS_COLUMNS_NAME } = require("../../DB/database-information/table-teachers-columns-name");
 
-const checkIsStudentExist = async (uuid, studentId) => {
+const checkIsTeacherExist = async (uuid, teacherId) => {
     const _query = `
     SELECT
-        ${TABLE_STUDENT_COLUMNS_NAME.ID}
+        ${TABLE_TEACHERS_COLUMNS_NAME.ID}
     FROM
-        ${TABLES.TBL_STUDENTS}
+        ${TABLES.TBL_TEACHERS}
     WHERE
-        ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ? AND
-        ${TABLE_STUDENT_COLUMNS_NAME.ID} = ? AND
-        ${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = 1;
+        ${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ? AND
+        ${TABLE_TEACHERS_COLUMNS_NAME.ID} = ? AND
+        ${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE} = 1;
     `;
     const _values = [
         uuid,
-        studentId
+        teacherId
     ];
     try {
         const [rows] = await pool.query(_query, _values);
@@ -41,44 +41,44 @@ const checkIsStudentExist = async (uuid, studentId) => {
 
 
 
-const updateStudentDataQuery = async (authData, studentData) => {
-    let _query = `UPDATE ${TABLES.TBL_STUDENTS} SET`;
+const updateTeacherDataQuery = async (authData, teacherData) => {
+    let _query = `UPDATE ${TABLES.TBL_TEACHERS} SET`;
     let _values = [];
 
-    if (studentData.fullName) {
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME} = ?`;
-        _values.push(studentData.fullName);
+    if (teacherData.fullName) {
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.FULLNAME} = ?`;
+        _values.push(teacherData.fullName);
     }
-    if (studentData.class) {
+    if (teacherData.class) {
         if (_values.length > 0) _query += ', ';
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.CLASS} = ?`;
-        _values.push(studentData.class);
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.CLASS} = ?`;
+        _values.push(teacherData.class);
     }
-    if (studentData.guardianPhone) {
+    if (teacherData.phone) {
         if (_values.length > 0) _query += ', ';
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.GUARDIAN_PHONE} = ?`;
-        _values.push(studentData.guardianPhone);
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.PHONE} = ?`;
+        _values.push(teacherData.phone);
     }
-    if (studentData.address) {
+    if (teacherData.address) {
         if (_values.length > 0) _query += ', ';
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.ADDRESS} = ?`;
-        _values.push(studentData.address);
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.ADDRESS} = ?`;
+        _values.push(teacherData.address);
     }
-    if (studentData.monthlyFee) {
+    if (teacherData.salary) {
         if (_values.length > 0) _query += ', ';
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.MONTHLY_FEE} = ?`;
-        _values.push(studentData.monthlyFee);
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.SALARY} = ?`;
+        _values.push(teacherData.salary);
     }
     if (_values.length > 0) {
         _query += ', ';
-        _query += ` ${TABLE_STUDENT_COLUMNS_NAME.UPDATED_AT} = ?`;
-        _values.push(studentData.updatedAt);
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.UPDATED_AT} = ?`;
+        _values.push(teacherData.updatedAt);
     }
 
     // Final WHERE condition
     if (_values.length > 0) {
-        _query += ` WHERE ${TABLE_STUDENT_COLUMNS_NAME.ID} = ? AND ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ?`;
-        _values.push(studentData.id);
+        _query += ` WHERE ${TABLE_TEACHERS_COLUMNS_NAME.ID} = ? AND ${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ?`;
+        _values.push(teacherData.id);
         _values.push(authData.uuid);
     }
 
@@ -105,35 +105,35 @@ const updateStudentDataQuery = async (authData, studentData) => {
  * id:number,
  * fullName?:string,
  * class?:string,
- * guardianPhone?:string,
+ * phone?:string,
  * address?:string,
- * monthly_fee?:number,
- * }} studentData  
- * @description This function updates an existing student record in the database using the provided student data. 
- * It returns a success message if the student is updated successfully, or an error message 
+ * salary?:number,
+ * }} teacherData  
+ * @description This function updates an existing teacher record in the database using the provided teacher data. 
+ * It returns a success message if the teacher is updated successfully, or an error message 
  * if there is an issue during the update process.
  */
-const updateStudentData = async (lgKey, authData, studentData) => {
+const updateTeacherData = async (lgKey, authData, teacherData) => {
     const updatedAt = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    studentData.updatedAt = updatedAt;
+    teacherData.updatedAt = updatedAt;
     try {
-        const isExist = await checkIsStudentExist(authData.uuid, studentData.id);
+        const isExist = await checkIsTeacherExist(authData.uuid, teacherData.id);
         if (isExist === false) {
             return Promise.reject(
                 setServerResponse(
                     API_STATUS_CODE.BAD_REQUEST,
-                    "student_is_not_found",
+                    "teacher_is_not_found",
                     lgKey
                 )
             )
         }
 
-        const isUpdated = await updateStudentDataQuery(authData, studentData);
+        const isUpdated = await updateTeacherDataQuery(authData, teacherData);
         if (isUpdated) {
             return Promise.resolve(
                 setServerResponse(
                     API_STATUS_CODE.OK,
-                    'student_updated_successfully',
+                    'teacher_updated_successfully',
                     lgKey
                 )
             );
@@ -151,5 +151,5 @@ const updateStudentData = async (lgKey, authData, studentData) => {
 }
 
 module.exports = {
-    updateStudentData
+    updateTeacherData
 }

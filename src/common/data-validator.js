@@ -27,6 +27,11 @@ const CLASS = [
     "ten",
     "eleven",
     "twelve"
+];
+
+const PLAN = [
+    "TRAIL",
+    "PAID"
 ]
 
 
@@ -44,6 +49,24 @@ const isNameValid = (fullName) => {
     }
     if (fullName.length > MAXIMUM_LENGTH) {
         return 'name_must_not_exceed_100_characters';
+    }
+    return true;
+}
+
+/**
+ * Validates name for minimum and maximum length constraints.
+ * @param {string} coachingName - The name to validate.
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isCoachingNameValid = (coachingName) => {
+    const MINIMUM_LENGTH = 3;
+    const MAXIMUM_LENGTH = 150;
+
+    if (coachingName.length < MINIMUM_LENGTH) {
+        return 'input_data_must_be_at_least_3_characters';
+    }
+    if (coachingName.length > MAXIMUM_LENGTH) {
+        return 'coaching_name_must_not_exceed_150_characters';
     }
     return true;
 }
@@ -88,7 +111,45 @@ const isEmailValid = (email) => {
  */
 const isValidClass = (classList) => {
     if (!CLASS.includes(classList)) {
-        return 'invalid_department';
+        return 'invalid_class';
+    }
+    return true;
+};
+
+/**
+ * Validates an classes address format.
+ * @param {string} classes - The classes to validate.
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isClassStringValid = (classes) => {
+    const MINIMUM_LENGTH = 3;
+    const MAXIMUM_LENGTH = 150;
+
+    if (!Array.isArray(classes)) {
+        return "class_must_be_an_array";
+    }
+
+    for (const cls of classes) {
+        if (typeof cls !== "string") {
+            return "class_must_be_string";
+        }
+
+        if (cls.length > MAXIMUM_LENGTH) {
+            return "class_must_not_exceed_150_characters";
+        }
+    }
+
+    return true;
+};
+
+/**
+ * Validates employee plan against allowed values.
+ * @param {string} plan - The plan to validate.
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isPlanValid = (plan) => {
+    if (!PLAN.includes(plan)) {
+        return 'invalid_plan';
     }
     return true;
 };
@@ -189,13 +250,16 @@ const isMessageValid = (message) => {
 
 module.exports = {
     isNameValid,
+    isCoachingNameValid,
     isEmailValid,
     isValidClass,
     isMonthlyFeesValid,
+    isPlanValid,
     isPasswordValid,
     isValidProjectDate,
     isDescriptionValid,
     isPhoneNumberValid,
     isAddressValid,
-    isMessageValid
+    isMessageValid,
+    isClassStringValid
 };
