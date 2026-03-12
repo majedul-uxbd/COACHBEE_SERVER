@@ -64,9 +64,6 @@ const insertTeacherDataQuery = async (authData, studentData) => {
  * if there is an issue during the creation process.
  */
 const createNewTeacher = async (lg, authData, teacherData) => {
-    console.log('🚀 -------------------------------------------------------🚀');
-    console.log('🚀 ~ :67 ~ createNewTeacher ~ teacherData:', teacherData);
-    console.log('🚀 -------------------------------------------------------🚀');
     try {
         const isInserted = await insertTeacherDataQuery(authData, teacherData);
         if (isInserted) {
@@ -79,9 +76,9 @@ const createNewTeacher = async (lg, authData, teacherData) => {
             );
         }
     } catch (error) {
-        console.log('🚀 -------------------------------------------🚀');
-        console.log('🚀 ~ :79 ~ createNewTeacher ~ error:', error);
-        console.log('🚀 -------------------------------------------🚀');
+        // console.log('🚀 -------------------------------------------🚀');
+        // console.log('🚀 ~ :79 ~ createNewTeacher ~ error:', error);
+        // console.log('🚀 -------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,
