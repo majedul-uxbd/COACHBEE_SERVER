@@ -23,6 +23,7 @@ const checkIsAdminActiveQuery = async (uuid) => {
     FROM
         ${TABLES.TBL_USERS}
     WHERE
+        ${TABLE_USERS_COLUMNS_NAME.ROLE} = 'admin' AND
         ${TABLE_USERS_COLUMNS_NAME.UUID} = ?;
     `;
     try {

@@ -22,6 +22,8 @@ const TABLES = Object.freeze({
     TBL_OTP_VERIFICATION: 'tbl_otp_verification',
     TBL_NOTIFICATIONS: 'tbl_notifications',
     TBL_TEACHER_PAYMENTS: 'tbl_teacher_payments',
+    TBL_CLASSES: 'tbl_classes',
+    TBL_SUBJECTS: 'tbl_subjects',
 });
 
 module.exports = {

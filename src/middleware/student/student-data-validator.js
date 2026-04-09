@@ -23,7 +23,7 @@ const studentDataValidator = async (req, res, next) => {
     const studentData = {
         id: req.body.id,
         fullName: req.body.fullName,
-        class: req.body.class,
+        class: JSON.stringify(req.body.class),
         guardianPhone: req.body.guardianPhone,
         address: req.body.address,
         monthly_fee: Number(req.body.monthly_fee)
@@ -81,41 +81,41 @@ const studentDataValidator = async (req, res, next) => {
     }
 
     // Check if student class is provided
-    if (updateUrl) {
-        if (studentData.class) {
-            const isValid = isValidClass(studentData.class);
-            if (isValid !== true) {
-                return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                    setServerResponse(
-                        API_STATUS_CODE.BAD_REQUEST,
-                        isValid,
-                        lgKey
-                    )
-                );
-            }
-        }
-    } else {
-        if (!studentData.class) {
-            return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                setServerResponse(
-                    API_STATUS_CODE.BAD_REQUEST,
-                    'student_name_is_required',
-                    lgKey
-                )
-            );
-        } else {
-            const isValid = isValidClass(studentData.class);
-            if (isValid !== true) {
-                return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                    setServerResponse(
-                        API_STATUS_CODE.BAD_REQUEST,
-                        isValid,
-                        lgKey
-                    )
-                );
-            }
-        }
-    }
+    // if (updateUrl) {
+    //     if (studentData.class) {
+    //         const isValid = isValidClass(studentData.class);
+    //         if (isValid !== true) {
+    //             return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+    //                 setServerResponse(
+    //                     API_STATUS_CODE.BAD_REQUEST,
+    //                     isValid,
+    //                     lgKey
+    //                 )
+    //             );
+    //         }
+    //     }
+    // } else {
+    //     if (!studentData.class) {
+    //         return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+    //             setServerResponse(
+    //                 API_STATUS_CODE.BAD_REQUEST,
+    //                 'student_name_is_required',
+    //                 lgKey
+    //             )
+    //         );
+    //     } else {
+    //         const isValid = isValidClass(studentData.class);
+    //         if (isValid !== true) {
+    //             return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+    //                 setServerResponse(
+    //                     API_STATUS_CODE.BAD_REQUEST,
+    //                     isValid,
+    //                     lgKey
+    //                 )
+    //             );
+    //         }
+    //     }
+    // }
 
     // Check if phone is provided
     if (updateUrl) {

@@ -13,6 +13,7 @@ const { authRoute } = require("./routes/auth/auth.route");
 const { studentRoute } = require("./routes/students/students.route");
 const { teachersRouter } = require("./routes/teachers/teachers.route");
 const { payrollRouter } = require("./routes/payroll/payroll.route");
+const { commonRouter } = require("./routes/common/common.route");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -23,6 +24,7 @@ app.use("/auth", authRoute);
 app.use("/teachers", teachersRouter);
 app.use("/students", studentRoute);
 app.use("/payroll", payrollRouter);
+app.use("/common", commonRouter);
 
 
 // Middleware to parse JSON bodies

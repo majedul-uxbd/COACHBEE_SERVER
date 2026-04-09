@@ -52,7 +52,7 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
     if (teacherData.class) {
         if (_values.length > 0) _query += ', ';
         _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.CLASS} = ?`;
-        _values.push(teacherData.class);
+        _values.push(JSON.stringify(teacherData.class));
     }
     if (teacherData.phone) {
         if (_values.length > 0) _query += ', ';
@@ -82,10 +82,10 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
         _values.push(authData.uuid);
     }
 
-    // console.log({
-    //     Query: _query,
-    //     Values: _values
-    // })
+    console.log({
+        Query: _query,
+        Values: _values
+    })
 
     try {
         const [result] = await pool.query(_query, _values);

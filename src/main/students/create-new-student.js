@@ -76,6 +76,7 @@ const createNewStudent = async (lg, authData, studentData) => {
             );
         }
     } catch (error) {
+        console.log('🚀 ~ create-new-student.js:66 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

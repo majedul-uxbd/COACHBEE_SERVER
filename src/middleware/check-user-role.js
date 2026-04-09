@@ -13,6 +13,22 @@ const { setServerResponse } = require("../common/set-server-response");
 const { API_STATUS_CODE } = require("../consts/error-status");
 
 
+const isUserRoleSuperAdmin = async (req, res, next) => {
+    const authData = req.auth;
+    const lgKey = req.body.lg;
+    if (authData.role !== "super_admin") {
+        return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                "you_are_not_allowed_for_the_request",
+                lgKey
+            )
+        );
+    }
+    next();
+};
+
+
 const isUserRoleAdmin = async (req, res, next) => {
     const authData = req.auth;
     const lgKey = req.body.lg;
@@ -30,5 +46,6 @@ const isUserRoleAdmin = async (req, res, next) => {
 
 
 module.exports = {
-    isUserRoleAdmin
+    isUserRoleSuperAdmin,
+    isUserRoleAdmin,
 }

@@ -25,6 +25,7 @@ const { teachersDataValidator } = require("../../middleware/teacher/teacher-data
 const { createNewTeacher } = require("../../main/teachers/create-new-teacher");
 const { deleteTeacherData } = require("../../main/teachers/delete-teacher-data");
 const { changeTeacherStatus } = require("../../main/teachers/change-teacher-status");
+const { updateTeacherData } = require("../../main/teachers/update-teacher-data");
 const teachersRouter = express.Router();
 
 teachersRouter.use(authenticateToken);
@@ -138,11 +139,11 @@ teachersRouter.post("/change-status",
  */
 teachersRouter.post("/update",
     isUserRoleAdmin,
-    studentDataValidator,
+    teachersDataValidator,
     async (req, res) => {
         const authData = req.auth;
-        const { lg, studentData } = req.body;
-        updateStudentData(lg, authData, studentData)
+        const { lg, teacherData } = req.body;
+        updateTeacherData(lg, authData, teacherData)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,

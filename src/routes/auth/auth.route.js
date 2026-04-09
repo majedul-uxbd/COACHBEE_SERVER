@@ -16,6 +16,7 @@ const { authenticateToken } = require("../../middleware/jwt");
 const { getPersonalData } = require("../../main/auth/get-user-data");
 const { createNewAdmin } = require("../../main/auth/create-new-admin");
 const { adminDataValidator } = require("../../middleware/auth/admin-data-validator");
+const { isUserRoleSuperAdmin } = require("../../middleware/check-user-role");
 const authRoute = express.Router();
 
 
@@ -70,7 +71,8 @@ authRoute.get("/get-user",
 * @description This route is used to create new admin for different coaching center. Only super admin can create new admin.
 */
 authRoute.post("/create-admin",
-    // authenticateToken,
+    authenticateToken,
+    isUserRoleSuperAdmin,
     adminDataValidator,
     async (req, res) => {
         const { lg, userData } = req.body;

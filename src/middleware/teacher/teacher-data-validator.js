@@ -17,7 +17,7 @@ const { API_STATUS_CODE } = require("../../consts/error-status");
 
 
 const teachersDataValidator = async (req, res, next) => {
-    const updateUrl = req.originalUrl === '/students/update';
+    const updateUrl = req.originalUrl === '/teachers/update';
     const lgKey = req.body.lg;
 
     const teacherData = {
@@ -81,18 +81,18 @@ const teachersDataValidator = async (req, res, next) => {
     }
 
     // Check if teacher class is provided
-    if (teacherData.class) {
-        const isValid = isClassStringValid(teacherData.class);
-        if (isValid !== true) {
-            return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                setServerResponse(
-                    API_STATUS_CODE.BAD_REQUEST,
-                    isValid,
-                    lgKey
-                )
-            );
-        }
-    }
+    // if (teacherData.class) {
+    //     const isValid = isClassStringValid(teacherData.class);
+    //     if (isValid !== true) {
+    //         return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+    //             setServerResponse(
+    //                 API_STATUS_CODE.BAD_REQUEST,
+    //                 isValid,
+    //                 lgKey
+    //             )
+    //         );
+    //     }
+    // }
 
 
     // Check if phone is provided
