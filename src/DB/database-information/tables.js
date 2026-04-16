@@ -18,7 +18,7 @@ const TABLES = Object.freeze({
     TBL_STUDENTS: 'tbl_students',
     TBL_TEACHERS: 'tbl_teachers',
     TBL_attendance: 'tbl_attendance',
-    TBL_PAYMENTS: 'tbl_payments',
+    TBL_STUDENT_PAYMENTS: 'tbl_student_payments',
     TBL_OTP_VERIFICATION: 'tbl_otp_verification',
     TBL_NOTIFICATIONS: 'tbl_notifications',
     TBL_TEACHER_PAYMENTS: 'tbl_teacher_payments',

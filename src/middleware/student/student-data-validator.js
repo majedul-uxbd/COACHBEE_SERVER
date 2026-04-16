@@ -15,7 +15,9 @@ const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 
 
-
+/**
+ * @description This middleware is used to validate student data for create and update student information
+ */
 const studentDataValidator = async (req, res, next) => {
     const updateUrl = req.originalUrl === '/students/update';
     const lgKey = req.body.lg;

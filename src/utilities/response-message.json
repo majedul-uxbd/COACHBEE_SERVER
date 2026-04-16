@@ -72,7 +72,18 @@
         "teacher_inactivated_successfully": "Teacher is inactivated successfully",
         "teacher_has_already_inactive": "Teacher has already inactive",
         "teacher_has_already_active": "Teacher has already active",
-        "teacher_updated_successfully": "Teacher is updated successfully"
+        "teacher_updated_successfully": "Teacher is updated successfully",
+        "total_payable_amount_is_not_found": "Total payable amount is not found",
+        "month_is_required": "Month is required",
+        "year_is_required": "Year is required",
+        "valid_total_payable_amount_is_required": "Valid total payable amount is required",
+        "valid_paid_amount_is_required": "Valid paid amount is required",
+        "valid_due_amount_is_required": "Valid due amount is required",
+        "payment_status_is_required": "Payment status is required",
+        "month_is_invalid": "Month is invalid",
+        "payment_status_is_invalid": "Payment status is invalid",
+        "student_is_not_found_or_inactive": "Student is not found or inactive",
+        "student_payment_created_successfully": "Student payment is created successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -147,6 +158,17 @@
         "teacher_inactivated_successfully": "শিক্ষক সফলভাবে নিষ্ক্রিয় করা হয়েছে",
         "teacher_has_already_inactive": "শিক্ষক ইতিমধ্যে নিষ্ক্রিয়",
         "teacher_has_already_active": "শিক্ষক ইতিমধ্যে সক্রিয়",
-        "teacher_updated_successfully": "শিক্ষক সফলভাবে আপডেট করা হয়েছে"
+        "teacher_updated_successfully": "শিক্ষক সফলভাবে আপডেট করা হয়েছে",
+        "total_payable_amount_is_not_found": "মোট প্রদেয় পরিমাণ পাওয়া যায়নি",
+        "month_is_required": "মাস প্রয়োজন",
+        "year_is_required": "বছর প্রয়োজন",
+        "valid_total_payable_amount_is_required": "বৈধ মোট প্রদেয় পরিমাণ প্রয়োজন",
+        "valid_paid_amount_is_required": "বৈধ প্রদত্ত পরিমাণ প্রয়োজন",
+        "valid_due_amount_is_required": "বৈধ বাকি পরিমাণ প্রয়োজন",
+        "payment_status_is_required": "পেমেন্ট স্ট্যাটাস প্রয়োজন",
+        "month_is_invalid": "মাসের নাম সঠিক নয়",
+        "payment_status_is_invalid": "পেমেন্ট স্ট্যাটাস সঠিক নয়",
+        "student_is_not_found_or_inactive": "শিক্ষার্থী পাওয়া যায়নি বা নিষ্ক্রিয়",
+        "student_payment_created_successfully": "শিক্ষার্থী পেমেন্ট সফলভাবে তৈরি হয়েছে"
     }
 }

@@ -12,7 +12,7 @@
 
 
 const _ = require('lodash');
-const { parse, isValid } = require('date-fns');
+const { parse, isValid, getYear } = require('date-fns');
 
 const CLASS = [
     "one",
@@ -34,6 +34,25 @@ const PLAN = [
     "PAID"
 ]
 
+const monthArray = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+];
+
+const PAYMENT_STATUS = [
+    "PAID",
+    "DUE"
+]
 
 /**
  * Validates name for minimum and maximum length constraints.
@@ -247,6 +266,49 @@ const isMessageValid = (message) => {
     return true;
 }
 
+/**
+ * Validates month for allowed values.
+ * @param {string} month 
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isMonthValid = (month) => {
+    if (!monthArray.includes(month)) {
+        return 'month_is_invalid';
+    }
+    return true;
+};
+
+/**
+ * Validates year for allowed values.
+ * @param {string} year 
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isYearValid = (year) => {
+    const yearString = typeof year === 'number' ? String(year) : year;
+    if (typeof yearString !== 'string' || !/^[0-9]{4}$/.test(yearString)) {
+        return 'year_is_invalid';
+    }
+
+    const parsedYear = parse(yearString, 'yyyy', new Date());
+    if (!isValid(parsedYear) || getYear(parsedYear) !== Number(yearString)) {
+        return 'year_is_invalid';
+    }
+
+    return true;
+};
+
+/**
+ * Validates month for allowed values.
+ * @param {string} status 
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isPaymentStatusValid = (status) => {
+    if (!PAYMENT_STATUS.includes(status)) {
+        return 'payment_status_is_invalid';
+    }
+    return true;
+};
+
 
 module.exports = {
     isNameValid,
@@ -261,5 +323,8 @@ module.exports = {
     isPhoneNumberValid,
     isAddressValid,
     isMessageValid,
-    isClassStringValid
+    isClassStringValid,
+    isMonthValid,
+    isYearValid,
+    isPaymentStatusValid
 };
