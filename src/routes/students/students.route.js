@@ -21,6 +21,7 @@ const { deleteStudentData } = require("../../main/students/delete-student-data")
 const { changeStudentStatus } = require("../../main/students/inactive-student-data");
 const { updateStudentData } = require("../../main/students/update-student-data");
 const { getStudentTotalPayableAmount } = require("../../main/students/get-student-total-payable-amount");
+const { getStudentList } = require("../../main/students/get-student-list");
 const studentRoute = express.Router();
 
 studentRoute.use(authenticateToken);
@@ -163,6 +164,31 @@ studentRoute.post("/total-payable-amount",
         const { lg, studentId } = req.body;
         const authData = req.auth;
         getStudentTotalPayableAmount(lg, studentId, authData)
+            .then(data => {
+                return res.status(data.statusCode).send({
+                    status: data.status,
+                    message: data.message,
+                    totalPayableAmount: data.result
+                })
+            })
+            .catch(error => {
+                return res.status(error.statusCode).send({
+                    status: error.status,
+                    message: error.message,
+                })
+            })
+    }
+);
+
+
+/**
+ * @description This is get student total payable amount route
+ */
+studentRoute.post("/student-list",
+    async (req, res) => {
+        const { lg } = req.body;
+        const authData = req.auth;
+        getStudentList(lg, authData)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,
