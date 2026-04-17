@@ -77,7 +77,7 @@ const autoGenerateStudentPayment = async () => {
             month,
             year,
             student.totalPayableAmount,
-            0, // paidAmount default
+            null, // paidAmount default
             student.totalPayableAmount, // due = full amount
             'DUE' // payment status
         ]);

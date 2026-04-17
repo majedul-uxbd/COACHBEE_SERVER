@@ -19,6 +19,7 @@ const { authenticateToken } = require('../../middleware/jwt');
 const { checkIsAdminActive } = require('../../restrictions/check-is-admin-active');
 const { createStudentsPayment } = require('../../main/payroll/create-student-payment');
 const { studentPaymentDataValidator } = require('../../middleware/payroll/student-payment-data-validator');
+const { updateStudentsPayment } = require('../../main/payroll/update-student-payment');
 const payrollRouter = express.Router();
 
 payrollRouter.use(authenticateToken);
@@ -52,7 +53,7 @@ payrollRouter.post("/student-payments",
 
 
 /**
- * @description This is get salary details route
+ * @description This is create student payments route
  */
 payrollRouter.post("/create-student-payments",
     isUserRoleAdmin,
@@ -61,6 +62,33 @@ payrollRouter.post("/create-student-payments",
         const authData = req.auth;
         const { lg, paymentData } = req.body;
         createStudentsPayment(lg, authData, paymentData)
+            .then(data => {
+                return res.status(data.statusCode).send({
+                    status: data.status,
+                    message: data.message,
+                    data: data.result
+                })
+            })
+            .catch(error => {
+                return res.status(error.statusCode).send({
+                    status: error.status,
+                    message: error.message,
+                })
+            })
+    }
+);
+
+
+/**
+ * @description This is update student payments route
+ */
+payrollRouter.post("/update-student-payment",
+    isUserRoleAdmin,
+    studentPaymentDataValidator,
+    async (req, res) => {
+        const authData = req.auth;
+        const { lg, paymentData } = req.body;
+        updateStudentsPayment(lg, authData, paymentData)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,
