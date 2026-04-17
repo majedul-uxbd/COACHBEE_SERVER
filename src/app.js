@@ -8,12 +8,15 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const cron = require('node-cron');
 
 const { authRoute } = require("./routes/auth/auth.route");
 const { studentRoute } = require("./routes/students/students.route");
 const { teachersRouter } = require("./routes/teachers/teachers.route");
 const { payrollRouter } = require("./routes/payroll/payroll.route");
 const { commonRouter } = require("./routes/common/common.route");
+const { testRouter } = require("./routes/test.route");
+const { autoGenerateStudentPayment } = require("./utilities/auto-generate-student-payment");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -25,6 +28,7 @@ app.use("/teachers", teachersRouter);
 app.use("/students", studentRoute);
 app.use("/payroll", payrollRouter);
 app.use("/common", commonRouter);
+app.use("/test", testRouter);
 
 
 // Middleware to parse JSON bodies
@@ -36,6 +40,17 @@ app.use(
     })
 );
 app.use(express.json({ limit: "10mb" }));
+
+
+// Every month 1 tarikh 12:00 AM e run hobe
+cron.schedule('0 0 1 * *', async () => {
+    try {
+        console.log('Running monthly job...');
+        await autoGenerateStudentPayment();
+    } catch (error) {
+        console.error('Error calling API:', error.message);
+    }
+});
 
 const staticFilePath = path.join(__dirname, "/../uploads");
 app.use("/uploads", express.static(staticFilePath));

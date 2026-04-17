@@ -19,8 +19,9 @@ const { pool } = require("../../DB/db-pool");
 const getStudentListQuery = async (authData) => {
     const _query = `
         SELECT
-            ${TABLE_STUDENT_COLUMNS_NAME.ID},
-            ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME}
+            ${TABLE_STUDENT_COLUMNS_NAME.ID} AS studentId,
+            ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME} AS fullName,
+            ${TABLE_STUDENT_COLUMNS_NAME.MONTHLY_FEE} AS totalPayableAmount
         FROM
             ${TABLES.TBL_STUDENTS}
         WHERE

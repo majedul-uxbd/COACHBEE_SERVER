@@ -193,7 +193,7 @@ studentRoute.post("/student-list",
                 return res.status(data.statusCode).send({
                     status: data.status,
                     message: data.message,
-                    totalPayableAmount: data.result
+                    data: data.result
                 })
             })
             .catch(error => {

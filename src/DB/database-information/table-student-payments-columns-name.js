@@ -16,7 +16,7 @@
  */
 const TABLE_STUDENT_PAYMENTS_COLUMNS_NAME = Object.freeze({
     ID: 'id',
-    STUDENT_ID: 'students_id ',
+    STUDENT_ID: 'student_id ',
     MONTH: 'month',
     YEAR: 'year',
     TOTAL_PAYABLE_AMOUNT: 'total_payable_amount',
