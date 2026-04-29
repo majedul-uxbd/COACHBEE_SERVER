@@ -140,9 +140,9 @@ const changeTeacherStatus = async (lgKey, authData, teacherId, statusCode) => {
             )
         }
     } catch (error) {
-        console.log('🚀 -----------------------------------------------🚀');
-        console.log('🚀 ~ :143 ~ changeTeacherStatus ~ error:', error);
-        console.log('🚀 -----------------------------------------------🚀');
+        // console.log('🚀 -----------------------------------------------🚀');
+        // console.log('🚀 ~ :143 ~ changeTeacherStatus ~ error:', error);
+        // console.log('🚀 -----------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,
