@@ -17,6 +17,7 @@ const { payrollRouter } = require("./routes/payroll/payroll.route");
 const { commonRouter } = require("./routes/common/common.route");
 const { testRouter } = require("./routes/test.route");
 const { autoGenerateStudentPayment } = require("./utilities/auto-generate-student-payment");
+const { autoGenerateTeacherPayment } = require("./utilities/auto-generate-teachers-payment");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -42,11 +43,27 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 
 
-// Every month 1 tarikh 12:00 AM e run hobe
+/**
+ * 1st day of every month at 12:00 AM, this job will run and generate payment records for 
+ * all active students for the current month and year.
+ */
 cron.schedule('0 0 1 * *', async () => {
     try {
         console.log('Running monthly job...');
         await autoGenerateStudentPayment();
+    } catch (error) {
+        console.error('Error calling API:', error.message);
+    }
+});
+
+/**
+ * 1st day of every month at 12:00 AM, this job will run and generate payment records for 
+ * all active teachers for the current month and year.
+ */
+cron.schedule('0 0 1 * *', async () => {
+    try {
+        console.log('Running monthly job...');
+        await autoGenerateTeacherPayment();
     } catch (error) {
         console.error('Error calling API:', error.message);
     }

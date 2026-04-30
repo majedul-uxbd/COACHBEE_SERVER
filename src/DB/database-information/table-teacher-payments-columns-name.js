@@ -16,13 +16,17 @@
  */
 const TABLE_TEACHER_PAYMENTS_COLUMNS_NAME = Object.freeze({
     ID: 'id',
-    TEACHERS_UUID: 'teachers_uuid ',
+    TEACHERS_ID: 'teachers_id ',
     MONTH: 'month',
-    SALARY_AMOUNT: 'salary_amount',
+    YEAR: 'year',
     BONUS: 'bonus',
-    PAID_AMOUNT: "paid_amount",
+    BONUS_MONTH: 'bonus_month',
+    TOTAL_PAYABLE_AMOUNT: 'total_payable_amount',
+    PAID_AMOUNT: 'paid_amount',
+    DUES_AMOUNT: 'dues_amount',
     NOTE: 'note',
-    PAID_AT: 'paid_at',
+    SALARY_STATUS: 'salary_status',
+    // IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'
 });

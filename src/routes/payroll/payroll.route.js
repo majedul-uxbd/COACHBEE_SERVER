@@ -20,6 +20,7 @@ const { checkIsAdminActive } = require('../../restrictions/check-is-admin-active
 const { createStudentsPayment } = require('../../main/payroll/create-student-payment');
 const { studentPaymentDataValidator } = require('../../middleware/payroll/student-payment-data-validator');
 const { updateStudentsPayment } = require('../../main/payroll/update-student-payment');
+const { getTeachersPaymentInfoData } = require('../../main/payroll/get-teacher-payment-data');
 const payrollRouter = express.Router();
 
 payrollRouter.use(authenticateToken);
@@ -90,6 +91,33 @@ payrollRouter.post("/update-student-payment",
         const authData = req.auth;
         const { lg, paymentData } = req.body;
         updateStudentsPayment(lg, authData, paymentData)
+            .then(data => {
+                return res.status(data.statusCode).send({
+                    status: data.status,
+                    message: data.message,
+                    data: data.result
+                })
+            })
+            .catch(error => {
+                return res.status(error.statusCode).send({
+                    status: error.status,
+                    message: error.message,
+                })
+            })
+    }
+);
+
+
+/**
+ * @description This is get teacher payments details route
+ */
+payrollRouter.post("/teacher-payments",
+    isUserRoleAdmin,
+    paginationData,
+    async (req, res) => {
+        const authData = req.auth;
+        const { lg, paginationData, filterData } = req.body;
+        getTeachersPaymentInfoData(lg, authData, paginationData, filterData)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,

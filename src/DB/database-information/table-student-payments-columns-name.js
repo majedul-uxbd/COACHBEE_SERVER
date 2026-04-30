@@ -23,7 +23,7 @@ const TABLE_STUDENT_PAYMENTS_COLUMNS_NAME = Object.freeze({
     PAID_AMOUNT: 'paid_amount',
     DUES_AMOUNT: 'dues_amount',
     PAYMENT_STATUS: 'payment_status',
-    IS_ACTIVE: 'is_active',
+    // IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'
 });
