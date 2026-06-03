@@ -87,7 +87,7 @@ const getTeachersPaymentDetailsDataQuery = async (authData, paginationData, filt
         teacher.${TABLE_TEACHERS_COLUMNS_NAME.FULLNAME} AS fullName,
         teacher.${TABLE_TEACHERS_COLUMNS_NAME.CLASS},
         -- Payment Information --
-        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.ID} AS paymentId,
+        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.ID} AS salaryId,
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.MONTH},
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.YEAR},
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.BONUS},
@@ -95,9 +95,9 @@ const getTeachersPaymentDetailsDataQuery = async (authData, paginationData, filt
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.PAID_AMOUNT} AS paidAmount,
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.DUES_AMOUNT} AS duesAmount,
         payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.NOTE},
-        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.SALARY_STATUS} AS paymentStatus,
-        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.CREATED_AT} AS paymentDate,
-        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.UPDATED_AT} AS paymentUpdatedDate
+        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.SALARY_STATUS} AS salaryStatus,
+        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.CREATED_AT} AS salaryDate,
+        payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.UPDATED_AT} AS salaryUpdatedDate
 
     FROM
         ${TABLES.TBL_TEACHERS} AS teacher

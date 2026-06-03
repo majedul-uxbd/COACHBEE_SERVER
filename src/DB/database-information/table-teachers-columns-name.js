@@ -22,6 +22,7 @@ const TABLE_TEACHERS_COLUMNS_NAME = Object.freeze({
     PHONE: 'phone',
     SALARY: 'salary',
     ADDRESS: 'address',
+    STARTING_MONTH: 'starting_month',
     IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'

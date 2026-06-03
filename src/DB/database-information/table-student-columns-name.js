@@ -22,6 +22,7 @@ const TABLE_STUDENT_COLUMNS_NAME = Object.freeze({
     GUARDIAN_PHONE: 'guardian_phone',
     MONTHLY_FEE: 'monthly_fee',
     ADDRESS: 'address',
+    STARTING_MONTH: 'starting_month',
     IS_ACTIVE: 'is_active',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'
