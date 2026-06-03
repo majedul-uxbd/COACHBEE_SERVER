@@ -9,7 +9,7 @@
  * 
  */
 
-
+const { format } = require('date-fns');
 const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 const { TABLE_TEACHERS_COLUMNS_NAME } = require("../../DB/database-information/table-teachers-columns-name");
@@ -63,18 +63,20 @@ const getTeacherCurrentStatus = async (uuid, teacherId) => {
 }
 
 
-const changeTeacherStatusQuery = async (uuid, teacherId, statusCode) => {
+const changeTeacherStatusQuery = async (uuid, teacherId, statusCode, updatedAt) => {
     const _query = `
     UPDATE
         ${TABLES.TBL_TEACHERS}
     SET
-        ${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE} = ?
+        ${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE} = ?,
+        ${TABLE_TEACHERS_COLUMNS_NAME.UPDATED_AT} = ?
     WHERE
         ${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ? AND
         ${TABLE_TEACHERS_COLUMNS_NAME.ID} = ?
     `;
     const _values = [
         statusCode,
+        updatedAt,
         uuid,
         teacherId
     ];
@@ -96,6 +98,8 @@ const changeTeacherStatusQuery = async (uuid, teacherId, statusCode) => {
  */
 const changeTeacherStatus = async (lgKey, authData, teacherId, statusCode) => {
     const messageKey = statusCode === 1 ? "teacher_activated_successfully" : "teacher_inactivated_successfully";
+    const updatedAt = new Date();
+    console.log("🚀 ~ changeTeacherStatus ~ updatedAt:", updatedAt)
     try {
         const isExist = await checkIsTeacherExist(authData.uuid, teacherId);
         if (isExist === false) {
@@ -129,7 +133,7 @@ const changeTeacherStatus = async (lgKey, authData, teacherId, statusCode) => {
             )
         }
 
-        const isChanged = await changeTeacherStatusQuery(authData.uuid, teacherId, statusCode);
+        const isChanged = await changeTeacherStatusQuery(authData.uuid, teacherId, statusCode, updatedAt);
         if (isChanged === true) {
             return Promise.resolve(
                 setServerResponse(

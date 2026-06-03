@@ -104,7 +104,8 @@ const getStudentsPaymentDetailsDataQuery = async (authData, paginationData, filt
     ON
         student.${TABLE_STUDENT_COLUMNS_NAME.ID} = payment.${TABLE_STUDENT_PAYMENTS_COLUMNS_NAME.STUDENT_ID}
     WHERE
-        student.${TABLE_STUDENT_COLUMNS_NAME.UUID} = ?
+        student.${TABLE_STUDENT_COLUMNS_NAME.UUID} = ? AND
+        student.${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = 1
         ${filterQuery}
     ORDER BY
             payment.${TABLE_STUDENT_PAYMENTS_COLUMNS_NAME.CREATED_AT} ${paginationData.sortOrder}

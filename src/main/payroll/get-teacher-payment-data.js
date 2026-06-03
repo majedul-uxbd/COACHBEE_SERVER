@@ -106,7 +106,8 @@ const getTeachersPaymentDetailsDataQuery = async (authData, paginationData, filt
     ON
         teacher.${TABLE_TEACHERS_COLUMNS_NAME.ID} = payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.TEACHERS_ID}
     WHERE
-        teacher.${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ?
+        teacher.${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ? AND
+        teacher.${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE}  = 1
         ${filterQuery}
     ORDER BY
             payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.CREATED_AT} ${paginationData.sortOrder}

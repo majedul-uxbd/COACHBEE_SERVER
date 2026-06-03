@@ -114,7 +114,7 @@ const updateStudentDataQuery = async (authData, studentData) => {
  * if there is an issue during the update process.
  */
 const updateStudentData = async (lgKey, authData, studentData) => {
-    const updatedAt = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const updatedAt = new Date();
     studentData.updatedAt = updatedAt;
     try {
         const isExist = await checkIsStudentExist(authData.uuid, studentData.id);

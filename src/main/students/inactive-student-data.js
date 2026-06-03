@@ -63,18 +63,20 @@ const getStudentCurrentStatus = async (uuid, studentId) => {
 }
 
 
-const changeStudentStatusQuery = async (uuid, studentId, statusCode) => {
+const changeStudentStatusQuery = async (uuid, studentId, statusCode, updatedAt) => {
     const _query = `
     UPDATE
         ${TABLES.TBL_STUDENTS}
     SET
-        ${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = ?
+        ${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = ?,
+        ${TABLE_STUDENT_COLUMNS_NAME.UPDATED_AT} = ?
     WHERE
         ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ? AND
         ${TABLE_STUDENT_COLUMNS_NAME.ID} = ?
     `;
     const _values = [
         statusCode,
+        updatedAt,
         uuid,
         studentId
     ];
@@ -96,6 +98,7 @@ const changeStudentStatusQuery = async (uuid, studentId, statusCode) => {
  */
 const changeStudentStatus = async (lgKey, authData, studentId, statusCode) => {
     const messageKey = statusCode === 1 ? "student_activated_successfully" : "student_inactivated_successfully";
+    const updatedAt = new Date();
     try {
         const isExist = await checkIsStudentExist(authData.uuid, studentId);
         if (isExist === false) {
@@ -129,7 +132,7 @@ const changeStudentStatus = async (lgKey, authData, studentId, statusCode) => {
             )
         }
 
-        const isChanged = await changeStudentStatusQuery(authData.uuid, studentId, statusCode);
+        const isChanged = await changeStudentStatusQuery(authData.uuid, studentId, statusCode, updatedAt);
         if (isChanged === true) {
             return Promise.resolve(
                 setServerResponse(

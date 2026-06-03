@@ -92,7 +92,7 @@ const updateStudentPaymentDataQuery = async (paymentData) => {
  * @returns {Promise<Object>} The function returns a server response indicating the success or failure of the operation.
  */
 const updateStudentsPayment = async (lg, authData, paymentData) => {
-    const updatedAt = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const updatedAt = new Date();
     paymentData.updatedAt = updatedAt;
     try {
         const isStudentExist = await checkIsStudentExist(paymentData.studentId, authData.uuid);

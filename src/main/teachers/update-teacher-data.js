@@ -114,7 +114,7 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
  * if there is an issue during the update process.
  */
 const updateTeacherData = async (lgKey, authData, teacherData) => {
-    const updatedAt = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const updatedAt = new Date();
     teacherData.updatedAt = updatedAt;
     try {
         const isExist = await checkIsTeacherExist(authData.uuid, teacherData.id);
