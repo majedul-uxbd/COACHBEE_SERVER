@@ -298,6 +298,32 @@ const isYearValid = (year) => {
 };
 
 /**
+ * Validates date for format (yyyy-MM-dd).
+ * @param {string} date 
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isDateValid = (date) => {
+    const parsed = parse(date, 'yyyy-MM-dd', new Date());
+    const isValidDate = isValid(parsed);
+    if (!isValidDate) {
+        return 'invalid_date_format';
+    }
+    return true;
+}
+
+/**
+ * Validates attendance status for allowed values.
+ * @param {string} status 
+ * @returns {true|string} True if valid, error string otherwise.
+ */
+const isAttendanceStatusValid = (status) => {
+    if (!['present', 'absent', 'late'].includes(status)) {
+        return 'attendance_status_is_invalid';
+    }
+    return true;
+}
+
+/**
  * Validates month for allowed values.
  * @param {string} status 
  * @returns {true|string} True if valid, error string otherwise.
@@ -326,5 +352,7 @@ module.exports = {
     isClassStringValid,
     isMonthValid,
     isYearValid,
-    isPaymentStatusValid
+    isPaymentStatusValid,
+    isDateValid,
+    isAttendanceStatusValid
 };

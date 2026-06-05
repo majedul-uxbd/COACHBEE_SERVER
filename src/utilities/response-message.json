@@ -84,7 +84,13 @@
         "payment_status_is_invalid": "Payment status is invalid",
         "student_is_not_found_or_inactive": "Student is not found or inactive",
         "student_payment_created_successfully": "Student payment is created successfully",
-        "student_payment_updated_successfully": "Student payment is updated successfully"
+        "student_payment_updated_successfully": "Student payment is updated successfully",
+        "date_is_required": "Date is required",
+        "student_id_must_be_a_number": "Student id must be a number",
+        "date_must_be_a_string": "Date must be a string",
+        "status_is_required": "Status is required",
+        "status_must_be_a_string": "Status must be a string",
+        "attendance_marked_successfully": "Attendance marked successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -171,6 +177,12 @@
         "payment_status_is_invalid": "পেমেন্ট স্ট্যাটাস সঠিক নয়",
         "student_is_not_found_or_inactive": "শিক্ষার্থী পাওয়া যায়নি বা নিষ্ক্রিয়",
         "student_payment_created_successfully": "শিক্ষার্থী পেমেন্ট সফলভাবে তৈরি হয়েছে",
-        "student_payment_updated_successfully": "শিক্ষার্থী পেমেন্ট সফলভাবে আপডেট করা হয়েছে"
+        "student_payment_updated_successfully": "শিক্ষার্থী পেমেন্ট সফলভাবে আপডেট করা হয়েছে",
+        "date_is_required": "তারিখ প্রয়োজন",
+        "student_id_must_be_a_number": "শিক্ষার্থী আইডি অবশ্যই একটি সংখ্যা হতে হবে",
+        "date_must_be_a_string": "তারিখ অবশ্যই একটি স্ট্রিং হতে হবে",
+        "status_is_required": "স্ট্যাটাস প্রয়োজন",
+        "status_must_be_a_string": "স্ট্যাটাস অবশ্যই একটি স্ট্রিং হতে হবে",
+        "attendance_marked_successfully": "উপস্থিতি সফলভাবে চিহ্নিত করা হয়েছে"
     }
 }

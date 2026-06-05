@@ -99,7 +99,6 @@ const changeTeacherStatusQuery = async (uuid, teacherId, statusCode, updatedAt) 
 const changeTeacherStatus = async (lgKey, authData, teacherId, statusCode) => {
     const messageKey = statusCode === 1 ? "teacher_activated_successfully" : "teacher_inactivated_successfully";
     const updatedAt = new Date();
-    console.log("🚀 ~ changeTeacherStatus ~ updatedAt:", updatedAt)
     try {
         const isExist = await checkIsTeacherExist(authData.uuid, teacherId);
         if (isExist === false) {
