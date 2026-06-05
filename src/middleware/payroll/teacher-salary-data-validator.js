@@ -24,20 +24,22 @@ const teachersSalaryDataValidator = async (req, res, next) => {
     const lgKey = req.body.lg;
 
     const salaryData = {
-        studentId: Number(req.body.studentId),
+        teacherId: Number(req.body.teacherId),
         month: req.body.month,
         year: req.body.year,
+        bonus: Number(req.body.bonus),
         totalPayableAmount: Number(req.body.totalPayableAmount),
         paidAmount: Number(req.body.paidAmount),
         dueAmount: Number(req.body.dueAmount),
-        paymentStatus: req.body.paymentStatus
+        paymentStatus: req.body.paymentStatus,
+        notes: req.body.notes
     };
 
-    if (_.isNil(salaryData.studentId) || !_.isNumber(salaryData.studentId)) {
+    if (_.isNil(salaryData.teacherId) || !_.isNumber(salaryData.teacherId)) {
         return res.status(API_STATUS_CODE.BAD_REQUEST).send(
             setServerResponse(
                 API_STATUS_CODE.BAD_REQUEST,
-                'student_id_is_required',
+                'teacher_id_is_required',
                 lgKey,
             )
         );
@@ -79,6 +81,18 @@ const teachersSalaryDataValidator = async (req, res, next) => {
                 setServerResponse(
                     API_STATUS_CODE.BAD_REQUEST,
                     isValid,
+                    lgKey,
+                )
+            );
+        }
+    }
+
+    if (!_.isNil(salaryData.bonus)) {
+        if (!_.isNumber(salaryData.bonus)) {
+            return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+                setServerResponse(
+                    API_STATUS_CODE.BAD_REQUEST,
+                    'invalid_bonus_amount',
                     lgKey,
                 )
             );
@@ -137,6 +151,7 @@ const teachersSalaryDataValidator = async (req, res, next) => {
     }
 
     req.body.salaryData = salaryData;
+    // console.log("🚀 ~ teachersSalaryDataValidator ~ body.salaryData:", salaryData)
     next();
 };
 

@@ -20,7 +20,6 @@ const TABLE_TEACHER_PAYMENTS_COLUMNS_NAME = Object.freeze({
     MONTH: 'month',
     YEAR: 'year',
     BONUS: 'bonus',
-    BONUS_MONTH: 'bonus_month',
     TOTAL_PAYABLE_AMOUNT: 'total_payable_amount',
     PAID_AMOUNT: 'paid_amount',
     DUES_AMOUNT: 'dues_amount',

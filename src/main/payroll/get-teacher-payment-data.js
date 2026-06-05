@@ -11,7 +11,7 @@
 
 const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");
-const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../../DB/database-information/table-teacher-payments-columns-name");
+const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../../DB/database-information/table-teacher-salary-columns-name");
 const { TABLE_TEACHERS_COLUMNS_NAME } = require("../../DB/database-information/table-teachers-columns-name");
 const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
@@ -42,7 +42,7 @@ const totalTeachersPaymentRowCount = async (authData, filterData) => {
     FROM
         ${TABLES.TBL_TEACHERS} AS teacher
     LEFT JOIN
-        ${TABLES.TBL_TEACHER_PAYMENTS} AS payment
+        ${TABLES.TBL_TEACHER_SALARY} AS payment
     ON
         teacher.${TABLE_TEACHERS_COLUMNS_NAME.ID} = payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.TEACHERS_ID}
     WHERE
@@ -102,7 +102,7 @@ const getTeachersPaymentDetailsDataQuery = async (authData, paginationData, filt
     FROM
         ${TABLES.TBL_TEACHERS} AS teacher
     LEFT JOIN
-        ${TABLES.TBL_TEACHER_PAYMENTS} AS payment
+        ${TABLES.TBL_TEACHER_SALARY} AS payment
     ON
         teacher.${TABLE_TEACHERS_COLUMNS_NAME.ID} = payment.${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.TEACHERS_ID}
     WHERE

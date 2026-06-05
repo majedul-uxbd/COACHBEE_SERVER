@@ -22,6 +22,7 @@ const { studentPaymentDataValidator } = require('../../middleware/payroll/studen
 const { updateStudentsPayment } = require('../../main/payroll/update-student-payment');
 const { getTeachersPaymentInfoData } = require('../../main/payroll/get-teacher-payment-data');
 const { teachersSalaryDataValidator } = require('../../middleware/payroll/teacher-salary-data-validator');
+const { updateTeachersSalary } = require('../../main/payroll/update-teacher-payment');
 const payrollRouter = express.Router();
 
 payrollRouter.use(authenticateToken);
@@ -154,6 +155,7 @@ payrollRouter.post("/update-teachers-salary",
                 })
             })
             .catch(error => {
+                console.log("🚀 ~ error:", error)
                 return res.status(error.statusCode).send({
                     status: error.status,
                     message: error.message,

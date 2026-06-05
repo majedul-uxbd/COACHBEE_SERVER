@@ -11,9 +11,7 @@
 
 const { setServerResponse } = require("../common/set-server-response");
 const { API_STATUS_CODE } = require("../consts/error-status");
-const { TABLE_STUDENT_COLUMNS_NAME } = require("../DB/database-information/table-student-columns-name");
-const { TABLE_STUDENT_PAYMENTS_COLUMNS_NAME } = require("../DB/database-information/table-student-payments-columns-name");
-const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../DB/database-information/table-teacher-payments-columns-name");
+const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../DB/database-information/table-teacher-salary-columns-name");
 const { TABLE_TEACHERS_COLUMNS_NAME } = require("../DB/database-information/table-teachers-columns-name");
 const { TABLES } = require("../DB/database-information/tables");
 const { pool } = require("../DB/db-pool");
@@ -42,7 +40,7 @@ const getTeachersListQuery = async () => {
 
 const createBulkTeacherPaymentQuery = async (paymentsData) => {
     const _query = `
-        INSERT IGNORE INTO ${TABLES.TBL_TEACHER_PAYMENTS}
+        INSERT IGNORE INTO ${TABLES.TBL_TEACHER_SALARY}
         (
             ${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.TEACHERS_ID},
             ${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.MONTH},

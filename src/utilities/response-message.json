@@ -90,7 +90,10 @@
         "date_must_be_a_string": "Date must be a string",
         "status_is_required": "Status is required",
         "status_must_be_a_string": "Status must be a string",
-        "attendance_marked_successfully": "Attendance marked successfully"
+        "attendance_marked_successfully": "Attendance marked successfully",
+        "invalid_bonus_amount": "Invalid bonus amount",
+        "teacher_is_not_found_or_inactive": "Teacher is not found or inactive",
+        "teacher_salary_updated_successfully": "Teacher salary updated successfully"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -183,6 +186,9 @@
         "date_must_be_a_string": "তারিখ অবশ্যই একটি স্ট্রিং হতে হবে",
         "status_is_required": "স্ট্যাটাস প্রয়োজন",
         "status_must_be_a_string": "স্ট্যাটাস অবশ্যই একটি স্ট্রিং হতে হবে",
-        "attendance_marked_successfully": "উপস্থিতি সফলভাবে চিহ্নিত করা হয়েছে"
+        "attendance_marked_successfully": "উপস্থিতি সফলভাবে চিহ্নিত করা হয়েছে",
+        "invalid_bonus_amount": "বোনাসের পরিমাণ সঠিক নয়",
+        "teacher_is_not_found_or_inactive": "শিক্ষক পাওয়া যায়নি বা নিষ্ক্রিয়",
+        "teacher_salary_updated_successfully": "শিক্ষক বেতন সফলভাবে আপডেট করা হয়েছে"
     }
 }

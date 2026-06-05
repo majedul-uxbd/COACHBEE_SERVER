@@ -15,7 +15,7 @@ const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 const { TABLE_TEACHERS_COLUMNS_NAME } = require("../../DB/database-information/table-teachers-columns-name");
-const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../../DB/database-information/table-teacher-payments-columns-name");
+const { TABLE_TEACHER_PAYMENTS_COLUMNS_NAME } = require("../../DB/database-information/table-teacher-salary-columns-name");
 
 const insertTeacherDataQuery = async (connection, authData, monthYear, teacherData) => {
     const _query = `
@@ -54,7 +54,7 @@ const insertTeacherDataQuery = async (connection, authData, monthYear, teacherDa
 const insertTeacherDataInPaymentTableQuery = async (connection, teacherId, monthName, year, teacherSalary) => {
     const _query = `
     INSERT INTO
-        ${TABLES.TBL_TEACHER_PAYMENTS}
+        ${TABLES.TBL_TEACHER_SALARY}
         (
             ${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.TEACHERS_ID},
             ${TABLE_TEACHER_PAYMENTS_COLUMNS_NAME.MONTH},
