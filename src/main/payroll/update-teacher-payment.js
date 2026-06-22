@@ -69,7 +69,7 @@ const updateTeacherSalaryDataQuery = async (salaryData) => {
         salaryData.paidAmount,
         salaryData.dueAmount,
         salaryData.paymentStatus,
-        salaryData.note || "",
+        salaryData.notes || "",
         salaryData.updatedAt,
         salaryData.teacherId,
     ];
