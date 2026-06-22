@@ -23,7 +23,7 @@ const placeholderImagePath = 'uploads/placeholder/placeholder-image.png';
  */
 const OTP_EXPIRED_PERIOD_IN_MINS = 15;
 
-const FRONTEND_URL = 'http://192.168.88.25:3000/CRM/en';
+const FRONTEND_URL = 'http://192.168.88.13:3000/coachbee/en';
 const VERIFY_OTP_URL = 'verify-otp';
 const USER_LOGIN = 'login';
 

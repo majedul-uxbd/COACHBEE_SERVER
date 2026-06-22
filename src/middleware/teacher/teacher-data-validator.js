@@ -24,6 +24,7 @@ const teachersDataValidator = async (req, res, next) => {
         id: req.body.id,
         fullName: req.body.fullName,
         class: req.body.class,
+        email: req.body.email,
         phone: req.body.phone,
         address: req.body.address,
         salary: Number(req.body.salary)
@@ -93,6 +94,18 @@ const teachersDataValidator = async (req, res, next) => {
     //         );
     //     }
     // }
+
+    // Check if email is provided
+    if (!_.isEmpty(teacherData.email)) {
+        if (typeof teacherData.email !== 'string' || !teacherData.email.includes('@')) {
+            return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+                setServerResponse(
+                    API_STATUS_CODE.BAD_REQUEST,
+                    'email_is_required',
+                    lgKey
+                ));
+        }
+    }
 
 
     // Check if phone is provided

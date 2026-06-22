@@ -11,11 +11,13 @@
 
 
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const { pool } = require('../DB/db-pool');
 const { setServerResponse } = require('../common/set-server-response');
 const { API_STATUS_CODE } = require('../consts/error-status');
 const { TABLES } = require('../DB/database-information/tables');
 const { TABLE_USERS_COLUMNS_NAME } = require('../DB/database-information/table-user-columns-name');
+const { TABLE_TEACHERS_COLUMNS_NAME } = require('../DB/database-information/table-teachers-columns-name');
 
 /**
  * Checks if a user with the given parameters is present and active in the database.
@@ -36,6 +38,47 @@ const checkUserId = async (id, uuid, email, role) => {
 		${TABLE_USERS_COLUMNS_NAME.EMAIL} = ? AND
 		${TABLE_USERS_COLUMNS_NAME.ROLE}  = ? AND
 		${TABLE_USERS_COLUMNS_NAME.IS_ACTIVE}  = ${1};
+  	`;
+
+	const values = [
+		id,
+		uuid,
+		email,
+		role
+	]
+
+	try {
+		const [result] = await pool.query(query, values);
+		if (result.length > 0) {
+			return true;
+		}
+		return false;
+	} catch (error) {
+		return error
+	}
+
+};
+
+
+/**
+ * Checks if a teacher with the given parameters is present and active in the database.
+ * @param {number} id - The teacher's ID.
+ * @param {string} email - The teacher's email address.
+ * @param {boolean} role - The teacher's admin status.
+ * @returns {Promise<boolean>} - Resolves to true if teacher exists and is active, false otherwise. Returns error on failure.
+ */
+const checkTeacherId = async (id, uuid, email, role) => {
+	const query = `
+  	SELECT
+		*
+	FROM
+		${TABLES.TBL_TEACHERS}
+	WHERE
+		${TABLE_TEACHERS_COLUMNS_NAME.ID} = ? AND
+		${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ? AND
+		${TABLE_TEACHERS_COLUMNS_NAME.EMAIL} = ? AND
+		${TABLE_TEACHERS_COLUMNS_NAME.ROLE}  = ? AND
+		${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE}  = ${1};
   	`;
 
 	const values = [
@@ -100,8 +143,12 @@ const authenticateToken = async (req, res, next) => {
 			);
 		}
 		const { id, uuid, email, role } = user;
+		let isUserExist;
 		try {
-			const isUserExist = await checkUserId(id, uuid, email, role);
+			isUserExist = await checkUserId(id, uuid, email, role);
+			if (isUserExist === false) {
+				isUserExist = await checkTeacherId(id, uuid, email, role);
+			}
 			if (isUserExist === true) {
 				req.auth = {
 					id,

@@ -11,11 +11,13 @@
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
 const { API_STATUS_CODE } = require('../../consts/error-status');
 const { setServerResponse } = require('../../common/set-server-response');
 const { TABLE_USERS_COLUMNS_NAME } = require('../../DB/database-information/table-user-columns-name');
+const { TABLE_TEACHERS_COLUMNS_NAME } = require('../../DB/database-information/table-teachers-columns-name');
 
 
 /**
@@ -38,6 +40,38 @@ const userLoginQuery = async (email) => {
         WHERE
             ${TABLE_USERS_COLUMNS_NAME.EMAIL} = ? AND
             ${TABLE_USERS_COLUMNS_NAME.IS_ACTIVE} = 1;
+        `;
+
+    try {
+        const [rows] = await pool.query(_query, [email]);
+        if (rows.length > 0) {
+            return Promise.resolve(rows[0]);
+        }
+        return false;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+/**
+ * Queries the database for a user by email and returns user info or status code.
+ * @param {string} email - The user's email address.
+ * @returns {Promise<Object|number|boolean>} User info object if found and active, 2 if pending, 0 if inactive, false if not found.
+ */
+const teacherLoginQuery = async (email) => {
+    const _query = `
+        SELECT
+            ${TABLE_TEACHERS_COLUMNS_NAME.ID},
+            ${TABLE_TEACHERS_COLUMNS_NAME.UUID},
+            ${TABLE_TEACHERS_COLUMNS_NAME.FULLNAME},
+            ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL},
+            ${TABLE_TEACHERS_COLUMNS_NAME.ROLE},
+            ${TABLE_TEACHERS_COLUMNS_NAME.PASSWORD}
+        FROM
+            ${TABLES.TBL_TEACHERS}
+        WHERE
+            ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL} = ? AND
+            ${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE} = 1;
         `;
 
     try {
@@ -87,6 +121,10 @@ const userLogin = async (userData) => {
 
     try {
         userInfo = await userLoginQuery(userData.email);
+        if (_.isEmpty(userInfo)) {
+            userInfo = await teacherLoginQuery(userData.email);
+        }
+        console.log('🚀 ~ user-login.js:121 ~ userInfo:', userInfo);
     } catch (error) {
         return Promise.reject(
             setServerResponse(
@@ -132,6 +170,7 @@ const userLogin = async (userData) => {
         );
     }
     const token = generateToken(userInfo);
+    console.log('🚀 ~ user-login.js:173 ~ token:', token);
     user = {
         token: token,
         id: userInfo.id,

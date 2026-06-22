@@ -19,11 +19,15 @@ const TABLE_TEACHERS_COLUMNS_NAME = Object.freeze({
     UUID: "uuid",
     FULLNAME: 'full_name',
     CLASS: 'class',
+    SUBJECTS: 'subjects',
+    EMAIL: 'email',
     PHONE: 'phone',
+    ROLE: 'role',
     SALARY: 'salary',
     ADDRESS: 'address',
     STARTING_MONTH: 'starting_month',
     IS_ACTIVE: 'is_active',
+    PASSWORD: 'password',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'
 });

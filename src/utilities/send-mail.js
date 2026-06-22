@@ -32,15 +32,13 @@ const { emailAccount } = require('../consts/config');
  */
 const transporter = nodemailer.createTransport(
     {
-        "host": "49.212.235.234",
-        "port": 587,
-        "secure": false,
-        "auth": {
-            "user": emailAccount.email,
-            "pass": emailAccount.pass
+        service: "gmail",
+        auth: {
+            user: emailAccount.email,
+            pass: emailAccount.pass
         },
-        "tls": {
-            "rejectUnauthorized": false
+        tls: {
+            rejectUnauthorized: false
         }
     }
 )

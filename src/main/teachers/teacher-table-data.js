@@ -47,6 +47,7 @@ const getTeachersDetailsDataQuery = async (authData, paginationData) => {
         ${TABLE_TEACHERS_COLUMNS_NAME.FULLNAME},
         ${TABLE_TEACHERS_COLUMNS_NAME.PHONE},
         ${TABLE_TEACHERS_COLUMNS_NAME.CLASS},
+        ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL},
         ${TABLE_TEACHERS_COLUMNS_NAME.SALARY},
         ${TABLE_TEACHERS_COLUMNS_NAME.ADDRESS},
         ${TABLE_TEACHERS_COLUMNS_NAME.STARTING_MONTH},
@@ -87,13 +88,13 @@ const getTeachersDetailsDataQuery = async (authData, paginationData) => {
 const getTeachersTableData = async (lgKey, authData, paginationData) => {
     try {
         const totalRows = await totalTeachersTableRowCount(authData);
-        const StudentData = await getTeachersDetailsDataQuery(authData, paginationData);
+        const teacherData = await getTeachersDetailsDataQuery(authData, paginationData);
 
         const result = {
             metadata: {
                 totalRows: totalRows,
             },
-            tableData: StudentData
+            tableData: teacherData
         };
         return Promise.resolve(
             setServerResponse(

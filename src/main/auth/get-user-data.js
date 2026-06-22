@@ -9,11 +9,13 @@
  * 
  */
 
+const _ = require('lodash');
 const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");
 const { TABLE_USERS_COLUMNS_NAME } = require("../../DB/database-information/table-user-columns-name");
 const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
+const { TABLE_TEACHERS_COLUMNS_NAME } = require('../../DB/database-information/table-teachers-columns-name');
 
 
 /**
@@ -54,6 +56,44 @@ const getUserPersonalData = async (authData) => {
     }
 }
 
+
+/**
+ * Retrieves teacher data of a user from the database based on authentication data.
+ *
+ * @param {{ id: number, email: string }} authData - Authenticated user data.
+ * @returns {Promise<Object>} - Resolves with user teacher data object if found. Rejects with error on failure.
+ */
+const getTeacherPersonalData = async (authData) => {
+    const _query = `
+        SELECT
+            ${TABLE_TEACHERS_COLUMNS_NAME.ID},
+            ${TABLE_TEACHERS_COLUMNS_NAME.FULLNAME},
+            ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL},
+            ${TABLE_TEACHERS_COLUMNS_NAME.ROLE},
+            ${TABLE_TEACHERS_COLUMNS_NAME.CREATED_AT}, 
+            ${TABLE_TEACHERS_COLUMNS_NAME.UPDATED_AT}
+        FROM
+            ${TABLES.TBL_TEACHERS}
+        WHERE
+            ${TABLE_TEACHERS_COLUMNS_NAME.ID} = ? AND
+            ${TABLE_TEACHERS_COLUMNS_NAME.UUID} = ? AND
+            ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL} = ? AND
+            ${TABLE_TEACHERS_COLUMNS_NAME.IS_ACTIVE} = 1;
+    `;
+
+    const _values = [
+        authData.id,
+        authData.uuid,
+        authData.email,
+    ];
+    try {
+        const [rows] = await pool.query(_query, _values);
+        return rows[0];
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
 /**
  * Retrieves personal data of a user and returns a standardized server response.
  *
@@ -62,12 +102,16 @@ const getUserPersonalData = async (authData) => {
  */
 const getPersonalData = async (authData) => {
     const lgKey = 'en'; // Default language key
+    let userData;
     try {
-        const userData = await getUserPersonalData(authData);
-        // console.log({
-        //     path: __filename,
-        //     userData
-        // });
+        userData = await getUserPersonalData(authData);
+        if (_.isEmpty(userData)) {
+            userData = await getTeacherPersonalData(authData);
+        }
+        console.log({
+            path: __filename,
+            userData
+        });
         if (!userData) {
             return Promise.reject(
                 setServerResponse(
@@ -86,9 +130,7 @@ const getPersonalData = async (authData) => {
             )
         );
     } catch (error) {
-        console.log('🚀 ------------------------------------------🚀');
         console.log('🚀 ~ :87 ~ getPersonalData ~ error:', error);
-        console.log('🚀 ------------------------------------------🚀');
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

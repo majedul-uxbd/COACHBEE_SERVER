@@ -11,8 +11,8 @@
 
 
 const emailAccount = Object.freeze({
-    email: 'bdtest@uxd.co.jp',
-    pass: 'tttTtttwlao23'
+    email: 'majedulledp4@gmail.com',
+    pass: 'nqalsakjombwfvzl'
 })
 
 
