@@ -108,10 +108,10 @@ const getPersonalData = async (authData) => {
         if (_.isEmpty(userData)) {
             userData = await getTeacherPersonalData(authData);
         }
-        console.log({
-            path: __filename,
-            userData
-        });
+        // console.log({
+        //     path: __filename,
+        //     userData
+        // });
         if (!userData) {
             return Promise.reject(
                 setServerResponse(

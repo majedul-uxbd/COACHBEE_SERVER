@@ -54,6 +54,11 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
         _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.CLASS} = ?`;
         _values.push(JSON.stringify(teacherData.class));
     }
+    if (teacherData.email) {
+        if (_values.length > 0) _query += ', ';
+        _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.EMAIL} = ?`;
+        _values.push(JSON.stringify(teacherData.email));
+    }
     if (teacherData.phone) {
         if (_values.length > 0) _query += ', ';
         _query += ` ${TABLE_TEACHERS_COLUMNS_NAME.PHONE} = ?`;
@@ -105,6 +110,7 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
  * id:number,
  * fullName?:string,
  * class?:string,
+ * email?:string,
  * phone?:string,
  * address?:string,
  * salary?:number,
