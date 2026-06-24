@@ -11,24 +11,22 @@
 
 const { setServerResponse } = require("../../common/set-server-response");
 const { API_STATUS_CODE } = require("../../consts/error-status");
-const { TABLE_PAYMENT_COLUMNS_NAME } = require("../../DB/database-information/table-attendance-columns-name");
+const { TABLE_ATTENDANCE_COLUMNS_NAME } = require("../../DB/database-information/table-attendance-columns-name");
 const { TABLE_STUDENT_COLUMNS_NAME } = require("../../DB/database-information/table-student-columns-name");
 const { TABLES } = require("../../DB/database-information/tables");
 const { pool } = require("../../DB/db-pool");
 
 
-const checkIsStudentExist = async (uuid, studentId) => {
+const checkIsStudentExist = async (studentId) => {
     const _query = `
     SELECT
         ${TABLE_STUDENT_COLUMNS_NAME.ID}
     FROM
         ${TABLES.TBL_STUDENTS}
     WHERE
-        ${TABLE_STUDENT_COLUMNS_NAME.UUID} = ? AND
         ${TABLE_STUDENT_COLUMNS_NAME.ID} = ?
     `;
     const _values = [
-        uuid,
         studentId
     ];
     try {
@@ -40,23 +38,28 @@ const checkIsStudentExist = async (uuid, studentId) => {
 }
 
 
-const insertAttendanceQuery = async (attendanceData) => {
+const insertAttendanceQuery = async (authData, attendanceData) => {
+    console.log('🚀 ~ insert-attendance-data.js:42 ~ authData:', authData);
 
     const _query = `
     INSERT INTO
         ${TABLES.TBL_ATTENDANCE} 
         (
-            ${TABLE_PAYMENT_COLUMNS_NAME.STUDENT_ID},
-            ${TABLE_PAYMENT_COLUMNS_NAME.DATE},
-            ${TABLE_PAYMENT_COLUMNS_NAME.STATUS}
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID},
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.DATE},
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.PRESENT},
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.ABSENT},
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.ATTENDANCE_BY}
         )
-        VALUES ( ?, ?, ?)
+        VALUES ( ?, ?, ?, ?, ?)
     `;
 
     const _values = [
         attendanceData.studentId,
         attendanceData.date,
-        attendanceData.status
+        attendanceData.present,
+        attendanceData.absent,
+        authData.id
     ]
 
     try {
@@ -74,7 +77,8 @@ const insertAttendanceQuery = async (attendanceData) => {
  * @param {{
  * studentId: number,
  * date: string,
- * status: string,
+ * present: boolean,
+ * absent: boolean
  * }} attendanceData - The attendance data to insert.
  * @param {{
  * uuid:string,
@@ -83,7 +87,7 @@ const insertAttendanceQuery = async (attendanceData) => {
  */
 const insertAttendanceData = async (lgKey, attendanceData, authData) => {
     try {
-        const isExist = await checkIsStudentExist(authData.uuid, attendanceData.studentId);
+        const isExist = await checkIsStudentExist(attendanceData.studentId);
         if (isExist === false) {
             return Promise.reject(
                 setServerResponse(
@@ -94,7 +98,7 @@ const insertAttendanceData = async (lgKey, attendanceData, authData) => {
             )
         }
 
-        const isInserted = await insertAttendanceQuery(attendanceData);
+        const isInserted = await insertAttendanceQuery(authData, attendanceData);
         if (isInserted === true) {
             return Promise.resolve(
                 setServerResponse(

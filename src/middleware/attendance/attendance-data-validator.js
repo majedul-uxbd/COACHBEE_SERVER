@@ -20,7 +20,8 @@ const attendanceDataValidator = (req, res, next) => {
     const attendanceData = {
         studentId: req.body.studentId,
         date: req.body.date,
-        status: req.body.status
+        present: req.body.present,
+        absent: req.body.absent,
     }
 
     if (_.isNil(attendanceData.studentId)) {
@@ -74,35 +75,24 @@ const attendanceDataValidator = (req, res, next) => {
         }
     }
 
-    if (_.isEmpty(attendanceData.status)) {
+    if (!_.isEmpty(attendanceData.present) && !_.isBoolean(attendanceData.present)) {
         return res.status(API_STATUS_CODE.BAD_REQUEST).send(
             setServerResponse(
                 API_STATUS_CODE.BAD_REQUEST,
-                'status_is_required',
+                'present_must_be_a_boolean',
                 lgKey,
             )
         );
-    } else {
-        if (!_.isString(attendanceData.status)) {
-            return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                setServerResponse(
-                    API_STATUS_CODE.BAD_REQUEST,
-                    'status_must_be_a_string',
-                    lgKey,
-                )
-            );
-        } else {
-            const isValid = isAttendanceStatusValid(attendanceData.status);
-            if (isValid !== true) {
-                return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-                    setServerResponse(
-                        API_STATUS_CODE.BAD_REQUEST,
-                        isValid,
-                        lgKey,
-                    )
-                );
-            }
-        }
+    }
+
+    if (!_.isEmpty(attendanceData.absent) && !_.isBoolean(attendanceData.absent)) {
+        return res.status(API_STATUS_CODE.BAD_REQUEST).send(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'absent_must_be_a_boolean',
+                lgKey,
+            )
+        );
     }
 
     req.body.attendanceData = attendanceData;

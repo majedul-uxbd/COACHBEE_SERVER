@@ -13,9 +13,33 @@ const express = require("express");
 const { insertAttendanceData } = require("../../main/attendance/insert-attendance-data");
 const { attendanceDataValidator } = require("../../middleware/attendance/attendance-data-validator");
 const { authenticateToken } = require("../../middleware/jwt");
+const { paginationData } = require("../../middleware/pagination-data");
+const { getStudentListData } = require("../../main/attendance/student-list-data");
 const attendanceRouter = express.Router();
 
 attendanceRouter.use(authenticateToken);
+
+
+attendanceRouter.post("/student-list",
+    paginationData,
+    async (req, res) => {
+        const { lg, paginationData } = req.body;
+        getStudentListData(lg, paginationData)
+            .then(data => {
+                return res.status(data.statusCode).send({
+                    status: data.status,
+                    message: data.message,
+                    data: data.result
+                })
+            })
+            .catch(error => {
+                return res.status(error.statusCode).send({
+                    status: error.status,
+                    message: error.message,
+                })
+            })
+    });
+
 
 attendanceRouter.post("/mark-attendance",
     attendanceDataValidator,
