@@ -19,6 +19,7 @@ const { testRouter } = require("./routes/test.route");
 const { autoGenerateStudentPayment } = require("./utilities/auto-generate-student-payment");
 const { autoGenerateTeacherPayment } = require("./utilities/auto-generate-teachers-payment");
 const { attendanceRouter } = require("./routes/attendance/attendance.route");
+const { classRouter } = require("./routes/class/class.route");
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
@@ -31,6 +32,7 @@ app.use("/teachers", teachersRouter);
 app.use("/students", studentRoute);
 app.use("/payroll", payrollRouter);
 app.use("/common", commonRouter);
+app.use("/class", classRouter);
 app.use("/test", testRouter);
 
 

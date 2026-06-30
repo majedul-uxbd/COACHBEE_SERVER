@@ -130,7 +130,7 @@ const getPersonalData = async (authData) => {
             )
         );
     } catch (error) {
-        console.log('🚀 ~ :87 ~ getPersonalData ~ error:', error);
+        // console.log('🚀 ~ :87 ~ getPersonalData ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

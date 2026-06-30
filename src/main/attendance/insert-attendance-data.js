@@ -39,7 +39,6 @@ const checkIsStudentExist = async (studentId) => {
 
 
 const insertAttendanceQuery = async (authData, attendanceData) => {
-    console.log('🚀 ~ insert-attendance-data.js:42 ~ authData:', authData);
 
     const _query = `
     INSERT INTO
@@ -110,7 +109,7 @@ const insertAttendanceData = async (lgKey, attendanceData, authData) => {
         }
 
     } catch (error) {
-        console.log("Error in insertAttendanceData :", error);
+        // console.log("Error in insertAttendanceData :", error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

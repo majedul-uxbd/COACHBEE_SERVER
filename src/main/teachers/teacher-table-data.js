@@ -105,9 +105,7 @@ const getTeachersTableData = async (lgKey, authData, paginationData) => {
             )
         )
     } catch (error) {
-        console.log('🚀 ------------------------------------------------🚀');
-        console.log('🚀 ~ :106 ~ getTeachersTableData ~ error:', error);
-        console.log('🚀 ------------------------------------------------🚀');
+        // console.log('🚀 ~ :106 ~ getTeachersTableData ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

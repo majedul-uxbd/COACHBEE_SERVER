@@ -68,7 +68,7 @@ const getStudentTotalPayableAmount = async (lg, studentId, authData) => {
             )
         );
     } catch (error) {
-        console.log('🚀 ~ get-student-total-payable-amount.js:43 ~ error:', error);
+        // console.log('🚀 ~ get-student-total-payable-amount.js:43 ~ error:', error);
 
         return Promise.reject(
             setServerResponse(

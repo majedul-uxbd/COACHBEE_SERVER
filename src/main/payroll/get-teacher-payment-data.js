@@ -152,7 +152,7 @@ const getTeachersPaymentInfoData = async (lgKey, authData, paginationData, filte
             )
         )
     } catch (error) {
-        console.log('🚀 ~ :152 ~ getTeachersPaymentInfoData ~ error:', error);
+        // console.log('🚀 ~ :152 ~ getTeachersPaymentInfoData ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

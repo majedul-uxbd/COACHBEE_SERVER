@@ -74,9 +74,9 @@ const hasPermissionToUpdateRequirement = async (req, res, next) => {
     const { lg, detailsId, requirementId } = req.body;
     try {
         const budgetStatus = await getBudgetStatus(requirementId);
-        console.log('🚀 ~ permission-to-update-requirement.js:77 ~ budgetStatus:', budgetStatus);
+        // console.log('🚀 ~ permission-to-update-requirement.js:77 ~ budgetStatus:', budgetStatus);
         const engineerStatus = await getEngineerStatus1Status(detailsId);
-        console.log('🚀 ~ permission-to-update-requirement.js:79 ~ engineerStatus:', engineerStatus);
+        // console.log('🚀 ~ permission-to-update-requirement.js:79 ~ engineerStatus:', engineerStatus);
         if (budgetStatus === true) {
             if (req.file) {
                 deleteUploadedFile(req.file);
@@ -104,7 +104,7 @@ const hasPermissionToUpdateRequirement = async (req, res, next) => {
             )
         }
     } catch (error) {
-        console.log('🚀 ~ create-new-requirement.js:68 ~ error:', error);
+        // console.log('🚀 ~ create-new-requirement.js:68 ~ error:', error);
         if (req.file) {
             deleteUploadedFile(req.file);
         }

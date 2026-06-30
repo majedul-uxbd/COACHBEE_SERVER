@@ -124,7 +124,7 @@ const updateTeachersSalary = async (lg, authData, salaryData) => {
             )
         }
     } catch (error) {
-        console.log('🚀 ~ update-teacher-payment.js:130 ~ error:', error);
+        // console.log('🚀 ~ update-teacher-payment.js:130 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

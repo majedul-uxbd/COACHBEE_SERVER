@@ -93,7 +93,7 @@ const autoGenerateTeacherPayment = async () => {
 
         console.log('✅ Payments generated successfully');
     } catch (error) {
-        console.log('🚀 ~ create-teacher-payment.js:60 ~ error:', error);
+        // console.log('🚀 ~ create-teacher-payment.js:60 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

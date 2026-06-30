@@ -113,9 +113,7 @@ const createNewAdmin = async (lgKey, userData) => {
             );
         }
     } catch (error) {
-        console.log('🚀 ------------------------------------------🚀');
-        console.log('🚀 ~ :116 ~ createNewAdmin ~ error:', error);
-        console.log('🚀 ------------------------------------------🚀');
+        // console.log('🚀 ~ :116 ~ createNewAdmin ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

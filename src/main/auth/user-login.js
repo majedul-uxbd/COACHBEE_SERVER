@@ -124,7 +124,7 @@ const userLogin = async (userData) => {
         if (_.isEmpty(userInfo)) {
             userInfo = await teacherLoginQuery(userData.email);
         }
-        console.log('🚀 ~ user-login.js:121 ~ userInfo:', userInfo);
+        // console.log('🚀 ~ user-login.js:121 ~ userInfo:', userInfo);
     } catch (error) {
         return Promise.reject(
             setServerResponse(
@@ -170,7 +170,6 @@ const userLogin = async (userData) => {
         );
     }
     const token = generateToken(userInfo);
-    console.log('🚀 ~ user-login.js:173 ~ token:', token);
     user = {
         token: token,
         id: userInfo.id,

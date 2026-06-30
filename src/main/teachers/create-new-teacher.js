@@ -298,7 +298,7 @@ const createNewTeacher = async (lg, authData, teacherData) => {
         );
 
     } catch (error) {
-        console.log('🚀 ~ :79 ~ createNewTeacher ~ error:', error);
+        // console.log('🚀 ~ :79 ~ createNewTeacher ~ error:', error);
         await connection.rollback();
         return Promise.reject(
             setServerResponse(

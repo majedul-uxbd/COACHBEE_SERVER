@@ -24,6 +24,7 @@ const TABLES = Object.freeze({
     TBL_TEACHER_SALARY: 'tbl_teacher_payments',
     TBL_CLASSES: 'tbl_classes',
     TBL_SUBJECTS: 'tbl_subjects',
+    TBL_CLASS: 'tbl_classes',
 });
 
 module.exports = {

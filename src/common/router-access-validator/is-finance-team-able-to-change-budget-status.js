@@ -33,7 +33,7 @@ const getFinanceTeamStatusQuery = async (detailsId) => {
             return result[0];
         } return false;
     } catch (error) {
-        console.log('🚀 ~ is-finance-team-able-to-change-budget-status.js:36 ~ error:', error);
+        // console.log('🚀 ~ is-finance-team-able-to-change-budget-status.js:36 ~ error:', error);
         return Promise.reject(error);
     }
 }

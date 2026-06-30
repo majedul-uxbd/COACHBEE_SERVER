@@ -116,7 +116,7 @@ const updateStudentsPayment = async (lg, authData, paymentData) => {
             )
         }
     } catch (error) {
-        console.log('🚀 ~ create-student-payment.js:60 ~ error:', error);
+        // console.log('🚀 ~ create-student-payment.js:60 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

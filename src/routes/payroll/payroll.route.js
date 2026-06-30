@@ -155,7 +155,7 @@ payrollRouter.post("/update-teachers-salary",
                 })
             })
             .catch(error => {
-                console.log("🚀 ~ error:", error)
+                // console.log("🚀 ~ error:", error)
                 return res.status(error.statusCode).send({
                     status: error.status,
                     message: error.message,

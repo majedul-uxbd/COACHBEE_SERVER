@@ -117,7 +117,7 @@ const createNewStudent = async (lg, authData, studentData) => {
             )
         );
     } catch (error) {
-        console.log("🚀 ~ createNewStudent ~ error:", error)
+        // console.log("🚀 ~ createNewStudent ~ error:", error)
 
         // Rollback Transaction
         await connection.rollback();

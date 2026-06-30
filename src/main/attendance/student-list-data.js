@@ -45,36 +45,50 @@ const totalUserTableRowCount = async () => {
 };
 
 //TODO: This is Temp Solution. I need to fix this.
-const getStudentDetailsDataQuery = async (paginationData) => {
+const getStudentDetailsDataQuery = async (date, studentClass) => {
+    // const _query = `
+    // SELECT
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.ID} AS attendanceId,
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID} AS studentId,
+    //     student.${TABLE_STUDENT_COLUMNS_NAME.FULLNAME} AS fullName,
+    //     student.${TABLE_STUDENT_COLUMNS_NAME.CLASS},
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.PRESENT},
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.ABSENT},
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.DATE} AS attendanceDate
+    // FROM
+    //     ${TABLES.TBL_ATTENDANCE} AS attendance
+    // LEFT JOIN
+    //     ${TABLES.TBL_STUDENTS} AS student
+    // ON
+    //     attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID} = student.${TABLE_STUDENT_COLUMNS_NAME.ID}
+    // WHERE
+    //     student.${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = 1
+    // ORDER BY
+    //     student.${TABLE_STUDENT_COLUMNS_NAME.CREATED_AT} ${paginationData.sortOrder}
+    //     LIMIT ? OFFSET ?;
+    // `;
+
     const _query = `
     SELECT
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.ID} AS attendanceId,
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID} AS studentId,
-        student.${TABLE_STUDENT_COLUMNS_NAME.FULLNAME} AS fullName,
-        student.${TABLE_STUDENT_COLUMNS_NAME.CLASS},
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.PRESENT},
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.ABSENT},
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.DATE} AS attendanceDate
+        ${TABLE_STUDENT_COLUMNS_NAME.ID} AS studentId,
+        ${TABLE_STUDENT_COLUMNS_NAME.FULLNAME},
+        ${TABLE_STUDENT_COLUMNS_NAME.CLASS}
     FROM
-        ${TABLES.TBL_ATTENDANCE} AS attendance
-    LEFT JOIN
-        ${TABLES.TBL_STUDENTS} AS student
-    ON
-        attendance.${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID} = student.${TABLE_STUDENT_COLUMNS_NAME.ID}
+        ${TABLES.TBL_STUDENTS}
     WHERE
-        student.${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = 1
-    ORDER BY
-        student.${TABLE_STUDENT_COLUMNS_NAME.CREATED_AT} ${paginationData.sortOrder}
-        LIMIT ? OFFSET ?;
+        ${TABLE_STUDENT_COLUMNS_NAME.IS_ACTIVE} = 1
+        AND ${TABLE_STUDENT_COLUMNS_NAME.CLASS} = ?
     `;
-    const _values = [
-        paginationData.itemsPerPage,
-        paginationData.offset
-    ];
-
+    // const _values = [
+    //     studentClass,
+    // ];
+    // console.log({
+    //     query: _query,
+    //     values: _values
+    // });
     try {
-        const [rows] = await pool.query(_query, _values);
-        console.log("🚀 ~ getStudentDetailsDataQuery ~ rows:", rows)
+        const [rows] = await pool.query(_query, studentClass);
+        // console.log("🚀 ~ getStudentDetailsDataQuery ~ rows:", rows)
         return rows;
     } catch (error) {
         return Promise.reject(error);
@@ -86,13 +100,23 @@ const getStudentDetailsDataQuery = async (paginationData) => {
  * Retrieves Student table data with server-side pagination, total row count.
  *
  * @param {string} lgKey - Language key for localization.
- * @param {{ itemsPerPage: number, currentPageNumber: number, filterBy: string, sortOrder: string, offset: number }} paginationData - Pagination and filter information.
+ * @param {string} date - The date for which to retrieve attendance data.
+ * @param {string} studentClass - The class of students to retrieve.
  * @returns {Promise<Object>} - Resolves with a server response containing metadata, table data, and pending data. Rejects with error on failure.
  */
-const getStudentListData = async (lgKey, paginationData) => {
+const getStudentListData = async (lgKey, date, studentClass) => {
+    if (!date || !studentClass) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'missing_required_parameters',
+                lgKey || 'en'
+            )
+        )
+    }
     try {
         const totalRows = await totalUserTableRowCount();
-        const StudentData = await getStudentDetailsDataQuery(paginationData);
+        const StudentData = await getStudentDetailsDataQuery(date, studentClass);
 
         const result = {
             metadata: {
@@ -109,8 +133,7 @@ const getStudentListData = async (lgKey, paginationData) => {
             )
         )
     } catch (error) {
-        console.log("🚀 ~ getStudentListData ~ error:", error)
-
+        // console.log("🚀 ~ getStudentListData ~ error:", error)
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

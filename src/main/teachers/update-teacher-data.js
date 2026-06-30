@@ -87,10 +87,10 @@ const updateTeacherDataQuery = async (authData, teacherData) => {
         _values.push(authData.uuid);
     }
 
-    console.log({
-        Query: _query,
-        Values: _values
-    })
+    // console.log({
+    //     Query: _query,
+    //     Values: _values
+    // })
 
     try {
         const [result] = await pool.query(_query, _values);

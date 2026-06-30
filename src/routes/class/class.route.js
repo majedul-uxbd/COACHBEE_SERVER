@@ -9,26 +9,24 @@
  * 
  */
 
+
 const express = require("express");
-const { insertAttendanceData } = require("../../main/attendance/insert-attendance-data");
-const { attendanceDataValidator } = require("../../middleware/attendance/attendance-data-validator");
 const { authenticateToken } = require("../../middleware/jwt");
-const { paginationData } = require("../../middleware/pagination-data");
-const { getStudentListData } = require("../../main/attendance/student-list-data");
-const attendanceRouter = express.Router();
-
-attendanceRouter.use(authenticateToken);
+const { createClassName } = require("../../main/class/create-class-name");
+const { deleteClassName } = require("../../main/class/delete-class-name");
+const classRouter = express.Router();
 
 
-attendanceRouter.post("/student-list",
+classRouter.use(authenticateToken);
+
+classRouter.post("/create",
     async (req, res) => {
-        const { lg, date, studentClass } = req.body;
-        getStudentListData(lg, date, studentClass)
+        const { lg, className } = req.body;
+        createClassName(lg, className)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,
-                    message: data.message,
-                    data: data.result
+                    message: data.message
                 })
             })
             .catch(error => {
@@ -40,17 +38,14 @@ attendanceRouter.post("/student-list",
     });
 
 
-attendanceRouter.post("/mark-attendance",
-    attendanceDataValidator,
+classRouter.post("/delete",
     async (req, res) => {
-        const authData = req.auth;
-        const { lg, attendanceData } = req.body;
-        insertAttendanceData(lg, attendanceData, authData)
+        const { lg, id } = req.body;
+        deleteClassName(lg, id)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,
-                    message: data.message,
-                    data: data.result
+                    message: data.message
                 })
             })
             .catch(error => {
@@ -62,5 +57,5 @@ attendanceRouter.post("/mark-attendance",
     });
 
 module.exports = {
-    attendanceRouter
-};
+    classRouter
+}
