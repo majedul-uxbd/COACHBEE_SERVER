@@ -20,8 +20,6 @@ const attendanceDataValidator = (req, res, next) => {
     const attendanceData = {
         studentId: req.body.studentId,
         date: req.body.date,
-        present: req.body.present,
-        absent: req.body.absent,
     }
 
     if (_.isNil(attendanceData.studentId)) {
@@ -73,26 +71,6 @@ const attendanceDataValidator = (req, res, next) => {
                 );
             }
         }
-    }
-
-    if (!_.isEmpty(attendanceData.present) && !_.isBoolean(attendanceData.present)) {
-        return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-            setServerResponse(
-                API_STATUS_CODE.BAD_REQUEST,
-                'present_must_be_a_boolean',
-                lgKey,
-            )
-        );
-    }
-
-    if (!_.isEmpty(attendanceData.absent) && !_.isBoolean(attendanceData.absent)) {
-        return res.status(API_STATUS_CODE.BAD_REQUEST).send(
-            setServerResponse(
-                API_STATUS_CODE.BAD_REQUEST,
-                'absent_must_be_a_boolean',
-                lgKey,
-            )
-        );
     }
 
     req.body.attendanceData = attendanceData;

@@ -19,7 +19,7 @@ const { pool } = require("../../DB/db-pool");
 const insertClassNameQuery = async (className) => {
     const _query = `
         INSERT IGNORE INTO
-            ${TABLES.TBL_CLASS}
+            ${TABLES.TBL_CLASSES}
             (
                 ${TABLE_CLASS_COLUMNS_NAME.CLASS_NAME}
             )
@@ -62,7 +62,7 @@ const createClassName = async (lgKey, className) => {
             );
         }
     } catch (error) {
-        // console.log('🚀 ~ create-class-name.js:41 ~ error:', error);
+        console.log('🚀 ~ create-class-name.js:41 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,

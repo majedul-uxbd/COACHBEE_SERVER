@@ -93,6 +93,7 @@ const insertStudentDataInPaymentTableQuery = async (connection, studentId, month
  * if there is an issue during the creation process.
  */
 const createNewStudent = async (lg, authData, studentData) => {
+    console.log('🚀 ~ create-new-student.js:96 ~ studentData:', studentData);
     const date = new Date();
 
     const monthName = format(date, 'MMMM');

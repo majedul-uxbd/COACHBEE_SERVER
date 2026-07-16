@@ -16,11 +16,9 @@
  */
 const TABLE_ATTENDANCE_COLUMNS_NAME = Object.freeze({
     ID: 'id',
-    STUDENT_ID: 'student_id ',
+    STUDENT_ID: 'student_id',
     DATE: 'date',
-    PRESENT: 'present',
-    ABSENT: 'absent',
-    LATE: 'late',
+    STATUS: 'status',
     ATTENDANCE_BY: 'attendance_by',
     CREATED_AT: 'created_at',
     UPDATED_AT: 'updated_at'

@@ -22,8 +22,8 @@ attendanceRouter.use(authenticateToken);
 
 attendanceRouter.post("/student-list",
     async (req, res) => {
-        const { lg, date, studentClass } = req.body;
-        getStudentListData(lg, date, studentClass)
+        const { lg, studentClass } = req.body;
+        getStudentListData(lg, studentClass)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,
@@ -41,11 +41,11 @@ attendanceRouter.post("/student-list",
 
 
 attendanceRouter.post("/mark-attendance",
-    attendanceDataValidator,
+    // attendanceDataValidator,
     async (req, res) => {
         const authData = req.auth;
-        const { lg, attendanceData } = req.body;
-        insertAttendanceData(lg, attendanceData, authData)
+        const { lg, attendanceSelections } = req.body;
+        insertAttendanceData(lg, attendanceSelections, authData)
             .then(data => {
                 return res.status(data.statusCode).send({
                     status: data.status,

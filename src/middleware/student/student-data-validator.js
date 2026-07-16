@@ -25,7 +25,7 @@ const studentDataValidator = async (req, res, next) => {
     const studentData = {
         id: req.body.id,
         fullName: req.body.fullName,
-        class: JSON.stringify(req.body.class),
+        class: req.body.class,
         guardianPhone: req.body.guardianPhone,
         address: req.body.address,
         monthly_fee: Number(req.body.monthly_fee)

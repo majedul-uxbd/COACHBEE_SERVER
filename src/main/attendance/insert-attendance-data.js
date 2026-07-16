@@ -10,7 +10,9 @@
  */
 
 const { setServerResponse } = require("../../common/set-server-response");
+const { format } = require("date-fns");
 const { API_STATUS_CODE } = require("../../consts/error-status");
+const { isDateValid, isAttendanceStatusValid } = require("../../common/data-validator");
 const { TABLE_ATTENDANCE_COLUMNS_NAME } = require("../../DB/database-information/table-attendance-columns-name");
 const { TABLE_STUDENT_COLUMNS_NAME } = require("../../DB/database-information/table-student-columns-name");
 const { TABLES } = require("../../DB/database-information/tables");
@@ -31,39 +33,35 @@ const checkIsStudentExist = async (studentId) => {
     ];
     try {
         const [rows] = await pool.query(_query, _values);
-        return rows.length > 0 ? true : false;
+        return rows.length > 0;
     } catch (error) {
         return Promise.reject(error);
     }
 }
 
 
-const insertAttendanceQuery = async (authData, attendanceData) => {
+const insertAttendanceQuery = async (attendanceRows) => {
+    if (!Array.isArray(attendanceRows) || attendanceRows.length === 0) {
+        return false;
+    }
 
+    const rowPlaceholders = attendanceRows.map(() => `(?, ?, ?, ?)`).join(", ");
     const _query = `
-    INSERT INTO
-        ${TABLES.TBL_ATTENDANCE} 
+    INSERT IGNORE INTO
+        ${TABLES.TBL_ATTENDANCE}
         (
             ${TABLE_ATTENDANCE_COLUMNS_NAME.STUDENT_ID},
             ${TABLE_ATTENDANCE_COLUMNS_NAME.DATE},
-            ${TABLE_ATTENDANCE_COLUMNS_NAME.PRESENT},
-            ${TABLE_ATTENDANCE_COLUMNS_NAME.ABSENT},
+            ${TABLE_ATTENDANCE_COLUMNS_NAME.STATUS},
             ${TABLE_ATTENDANCE_COLUMNS_NAME.ATTENDANCE_BY}
         )
-        VALUES ( ?, ?, ?, ?, ?)
+        VALUES ${rowPlaceholders}
     `;
 
-    const _values = [
-        attendanceData.studentId,
-        attendanceData.date,
-        attendanceData.present,
-        attendanceData.absent,
-        authData.id
-    ]
-
+    const _values = attendanceRows.flat();
     try {
         const [rows] = await pool.query(_query, _values);
-        return rows.affectedRows > 0 ? true : false;
+        return true;
     } catch (error) {
         return Promise.reject(error);
     }
@@ -73,50 +71,92 @@ const insertAttendanceQuery = async (authData, attendanceData) => {
 /**
  * Inserts attendance data into the database.
  * @param {string} lgKey - The language key for localization.
- * @param {{
- * studentId: number,
- * date: string,
- * present: boolean,
- * absent: boolean
- * }} attendanceData - The attendance data to insert.
- * @param {{
- * uuid:string,
- * }} authData - The authentication data.
- * @returns {Promise<object>} - The result of the insertion. If data
+ * @param {Array<Object>} attendanceData - The attendance data array to insert.
+ * @param {{ id: string }} authData - The authentication data.
+ * @returns {Promise<object>} - The result of the insertion.
  */
 const insertAttendanceData = async (lgKey, attendanceData, authData) => {
-    try {
-        const isExist = await checkIsStudentExist(attendanceData.studentId);
-        if (isExist === false) {
+    console.log('🚀 ~ insert-attendance-data.js:87 ~ attendanceData:', attendanceData);
+
+    if (!Array.isArray(attendanceData) || attendanceData.length === 0) {
+        return Promise.reject(
+            setServerResponse(
+                API_STATUS_CODE.BAD_REQUEST,
+                'attendance_data_is_required',
+                lgKey || 'en'
+            )
+        );
+    }
+
+    const attendanceRows = [];
+    for (const item of attendanceData) {
+        const studentId = item.studentId;
+        const status = item.status || item.type;
+        const dateValue = item.date ? item.date : format(new Date(), 'yyyy-MM-dd');
+
+        if (!studentId || !status) {
             return Promise.reject(
                 setServerResponse(
                     API_STATUS_CODE.BAD_REQUEST,
-                    "student_is_not_found",
-                    lgKey
+                    'student_id_and_status_are_required',
+                    lgKey || 'en'
                 )
-            )
+            );
         }
 
-        const isInserted = await insertAttendanceQuery(authData, attendanceData);
+        const validStatus = isAttendanceStatusValid(status);
+        if (validStatus !== true) {
+            return Promise.reject(
+                setServerResponse(
+                    API_STATUS_CODE.BAD_REQUEST,
+                    validStatus,
+                    lgKey || 'en'
+                )
+            );
+        }
+
+        if (item.date) {
+            const validDate = isDateValid(dateValue);
+            if (validDate !== true) {
+                return Promise.reject(
+                    setServerResponse(
+                        API_STATUS_CODE.BAD_REQUEST,
+                        validDate,
+                        lgKey || 'en'
+                    )
+                );
+            }
+        }
+
+        attendanceRows.push([
+            studentId,
+            format(new Date(dateValue), 'yyyy-MM-dd'),
+            status,
+            authData.id
+        ]);
+    }
+
+    try {
+        const isInserted = await insertAttendanceQuery(attendanceRows);
         if (isInserted === true) {
             return Promise.resolve(
                 setServerResponse(
                     API_STATUS_CODE.OK,
-                    "attendance_marked_successfully",
-                    lgKey
+                    'attendance_marked_successfully',
+                    lgKey || 'en'
                 )
-            )
+            );
         }
 
     } catch (error) {
-        // console.log("Error in insertAttendanceData :", error);
+        console.error('🚀 ~ insert-attendance-data.js:160 ~ error:', error);
         return Promise.reject(
             setServerResponse(
                 API_STATUS_CODE.INTERNAL_SERVER_ERROR,
-                "internal_server_error",
-                lgKey
+                'internal_server_error',
+                lgKey || 'en'
             )
-        )
+        );
     }
 }
 

@@ -98,7 +98,8 @@
         "class_name_created_successfully": "Class name created successfully",
         "id_is_required": "Id is required",
         "class_name_deleted_successfully": "Class name deleted successfully",
-        "class_name_is_not_found_or_deleted": "Class name is not found or already deleted"
+        "class_name_is_not_found_or_deleted": "Class name is not found or already deleted",
+        "student_id_and_status_are_required": " Student id and status are required"
     },
     "bn": {
         "success": "সফল হয়েছে",
@@ -199,6 +200,7 @@
         "class_name_created_successfully": "ক্লাসের নাম সফলভাবে তৈরি হয়েছে",
         "id_is_required": "আইডি প্রয়োজন",
         "class_name_deleted_successfully": "ক্লাসের নাম সফলভাবে মুছে ফেলা হয়েছে",
-        "class_name_is_not_found_or_deleted": "ক্লাসের নাম পাওয়া যায়নি বা মুছে ফেলা হয়েছে"
+        "class_name_is_not_found_or_deleted": "ক্লাসের নাম পাওয়া যায়নি বা মুছে ফেলা হয়েছে",
+        "student_id_and_status_are_required": " শিক্ষার্থী আইডি এবং স্ট্যাটাস প্রয়োজন"
     }
 }
